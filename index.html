@@ -108,6 +108,16 @@ ol.steps span{color:var(--ash);font-size:15px}
 details{border-bottom:1px solid var(--line);padding:14px 0}
 summary{cursor:pointer;font-weight:600;font-size:17px}
 details p{color:var(--ash);margin:10px 0 2px;max-width:70ch}
+.cmds{margin-top:30px}
+.cmds h3{font:800 24px/1.1 var(--display);letter-spacing:-.015em;margin:0 0 4px}
+.cmds>p{color:var(--ash);margin:0 0 14px;max-width:62ch}
+.cmd-list{margin:0;display:grid;grid-template-columns:max-content 1fr;border-top:1px solid var(--line)}
+.cmd-list dt,.cmd-list dd{margin:0;padding:10px 0;border-bottom:1px solid var(--line)}
+.cmd-list dt{padding-right:28px}
+.cmd-list code{font:600 14px var(--text);font-feature-settings:"calt" 0;background:var(--ember-2);color:var(--bone);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.cmd-list dd{color:var(--ash);font-size:15px}
+.cmd-list dd code{font-weight:500;padding:1px 6px}
+@media (max-width:620px){.cmd-list{grid-template-columns:1fr}.cmd-list dt{border-bottom:0;padding-bottom:2px}.cmd-list dd{padding-top:2px}}
 .discord{display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;text-decoration:none;font-weight:600;
   padding:12px 20px;border-radius:12px;margin:0 0 18px;transition:background .15s}
 .discord:hover{background:#4752c4}
@@ -175,6 +185,22 @@ footer p{margin:4px 0}
       </div>
       <p class="hint" id="hint">In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.</p>
       <p class="note">Paprika may look different in game.</p>
+    </div>
+    <div class="cmds">
+      <h3>Chat commands</h3>
+      <p>Type these in chat. They're never sent to the server, and anything else starting with # isn't sent either, so a typo won't give you away.</p>
+      <dl class="cmd-list">
+        <dt><code>#help</code></dt><dd>Shows the list of commands in chat.</dd>
+        <dt><code>#c waterMark</code></dt><dd>Turns the red dye and Paprika Client watermark in the top left on or off.</dd>
+        <dt><code>#m [equation]</code></dt><dd>A calculator. Supports + - x / and ^ or @ for powers, for example <code>#m 28+6x9</code>.</dd>
+        <dt><code>#a x1 y1 z1 x2 y2 z2</code></dt><dd>Draws an area between two corners. Use <code>#a ~ x y z</code> to start from where you stand.</dd>
+        <dt><code>#a deleteall</code></dt><dd>Deletes all your areas.</dd>
+        <dt><code>#friend add [name]</code></dt><dd>Adds a friend. Kill auras, CrystalAura, BowAimbot, AutoLogout and PlayerW leave friends alone, and FriendW tells you when they're near.</dd>
+        <dt><code>#friend remove [name]</code></dt><dd>Removes a friend.</dd>
+        <dt><code>#friend list</code></dt><dd>Shows your friends.</dd>
+        <dt><code>#orgskin</code></dt><dd>On cracked servers, shows players' real skins (only on your screen).</dd>
+        <dt><code>M</code></dt><dd>Not a command but a key: opens the marker menu, where you create, color and delete markers.</dd>
+      </dl>
     </div>
   </section>
 
@@ -322,7 +348,7 @@ styleList.addEventListener("click", () => setStyle(false));
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
   const parts = document.querySelectorAll(
     "header.top .brand, header.top nav, .hero h1, .hero .lead, .get, " +
-    "section h2.sec, section p.sec-sub, .menu .styles, .menu-top, .detail, .col, .pmenu, .hint, .note, " +
+    "section h2.sec, section p.sec-sub, .menu .styles, .menu-top, .detail, .col, .pmenu, .hint, .note, .cmds h3, .cmds > p, .cmd-list, " +
     ".feat, ol.steps li, details, footer .discord, footer p");
   parts.forEach(el => el.classList.add("fx"));
   const io = new IntersectionObserver(entries => {
