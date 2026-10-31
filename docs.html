@@ -478,20 +478,5 @@ ul.settings span{color:var(--ash)}
     <p>Paprika Client is a free fan-made mod. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
   </footer>
 </div>
-<script>
-(function () {
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
-  const parts = document.querySelectorAll("header.top .brand, header.top nav, .side, .doc h1, .doc > p.lead, .doc section > h2, .doc section > p, .doc h3, .modlist dt, .modlist dd, .cmd-list, .doc ul.plain, .themes, footer .discord, footer p");
-  parts.forEach(el => el.classList.add("fx"));
-  const io = new IntersectionObserver(entries => {
-    const seen = entries.filter(e => e.isIntersecting).map(e => e.target);
-    seen.forEach(el => io.unobserve(el));
-    seen.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
-    const step = Math.min(60, 500 / Math.max(1, seen.length));
-    seen.forEach((el, i) => setTimeout(() => el.classList.add("in"), i * step));
-  }, { threshold: 0.05 });
-  parts.forEach(el => io.observe(el));
-})();
-</script>
 </body>
 </html>
