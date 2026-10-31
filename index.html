@@ -68,6 +68,7 @@ p.sec-sub{color:var(--ash);max-width:60ch;margin:0 0 26px}
 .detail{min-height:58px;border-radius:12px;background:var(--ember);padding:12px 16px;margin-bottom:16px;border-left:3px solid var(--toast)}
 .detail b{font:800 18px var(--display);letter-spacing:-.01em}
 .detail span{display:block;color:var(--ash);font-size:14.5px}
+.cols[hidden],.pmenu[hidden]{display:none}
 .cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
 .col h3{margin:0;background:var(--paprika);border-radius:10px 10px 0 0;padding:7px 10px;font:600 14px var(--text);text-align:center}
 .col ul{list-style:none;margin:0;padding:4px 0 6px;background:var(--ember);border-radius:0 0 10px 10px}
@@ -78,6 +79,35 @@ p.sec-sub{color:var(--ash);max-width:60ch;margin:0 0 26px}
 .mod.dim{opacity:.25}
 .mod:focus-visible{outline:2px solid var(--toast);outline-offset:-2px;border-radius:4px}
 .hint{color:var(--ash);font-size:13px;margin:14px 2px 0}
+.note{color:#8d7b72;font-size:13px;font-style:italic;margin:6px 2px 0}
+
+/* style switch */
+.styles{display:inline-flex;background:#120c0a;border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.styles button{all:unset;cursor:pointer;padding:7px 14px;border-radius:7px;font:600 14px var(--text);color:var(--ash)}
+.styles button[aria-pressed="true"]{background:var(--paprika);color:#fff}
+.styles button:focus-visible{outline:2px solid var(--toast);outline-offset:2px}
+
+/* Menu style replica: the tabbed in-game menu (blue = off, green = on) */
+.pmenu{max-width:640px;background:rgba(0,0,0,.45);border:1px solid rgba(224,54,43,.55);border-radius:4px;font-family:var(--text)}
+.pmenu-head{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(224,54,43,.55);color:var(--paprika);font-weight:600}
+.pmenu-head img{width:18px;height:18px}
+.ptabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;padding:8px 10px}
+.ptab{all:unset;cursor:pointer;text-align:center;padding:4px 2px;background:rgba(255,255,255,.12);font-size:12.5px;color:#fff;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptab:hover{background:rgba(255,255,255,.2)}
+.ptab[aria-selected="true"]{background:rgba(224,54,43,.6)}
+.ptab:focus-visible{outline:2px solid var(--toast);outline-offset:1px}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:6px 10px 10px;min-height:150px;align-content:start}
+.pbtn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:6px;height:30px;padding:0 6px 0 8px;background:rgba(58,123,255,.55);color:#fff;font-size:13px;border-radius:2px}
+.pbtn:hover{background:rgba(90,150,255,.65)}
+.pbtn.on{background:rgba(51,212,90,.55)}
+.pbtn.on:hover{background:rgba(83,232,120,.65)}
+.pbtn .nm{flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbtn .sq{width:13px;height:13px;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.35) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9l1-3 4-4 2 2-4 4z' fill='%23bbbbbb'/%3E%3Cpath d='M2 10l1-1 1 1z' fill='%23777777'/%3E%3C/svg%3E") center/9px no-repeat;flex:none}
+.pbtn .key{width:30px;height:13px;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.35);flex:none}
+.pbtn:focus-visible{outline:2px solid var(--toast);outline-offset:1px}
+.pbtn .sw{width:9px;height:9px;flex:none}
+.pfoot{text-align:center;color:#999;font-size:12px;padding:6px 10px 9px}
+@media (max-width:620px){.ptabs{grid-template-columns:repeat(4,minmax(0,1fr))}.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* highlights */
 .feats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 56px}
@@ -137,8 +167,12 @@ footer p{margin:4px 0}
 
   <section id="mods">
     <h2 class="sec">Every mod, laid out like the in-game menu</h2>
-    <p class="sec-sub">This is the List style of the Paprika menu. Click a mod to read what it does, or type to search.</p>
+    <p class="sec-sub">Paprika has two menu styles: pick one below. Click a mod to read what it does, or type to search.</p>
     <div class="menu">
+      <div class="styles" role="group" aria-label="Menu style" style="margin-bottom:14px">
+        <button type="button" id="styleList" aria-pressed="true">List style</button>
+        <button type="button" id="styleMenu" aria-pressed="false">Menu style</button>
+      </div>
       <div class="menu-top">
         <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b19f95" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input id="q" type="search" placeholder="Search mods, e.g. ESP, aura, base" aria-label="Search mods"></label>
@@ -146,7 +180,14 @@ footer p{margin:4px 0}
       </div>
       <div class="detail" id="detail" aria-live="polite"><b>Pick a mod</b><span>Click any mod below to see what it does.</span></div>
       <div class="cols" id="cols"></div>
-      <p class="hint">In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.</p>
+      <div class="pmenu" id="pmenu" hidden>
+        <div class="pmenu-head"><img src="favicon.svg" alt="">Paprika Client</div>
+        <div class="ptabs" id="ptabs" role="tablist" aria-label="Menu tabs"></div>
+        <div class="pgrid" id="pgrid"></div>
+        <div class="pfoot" id="pfoot">Click a mod to toggle | pencil = settings | box = keybind | ESC to close</div>
+      </div>
+      <p class="hint" id="hint">In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.</p>
+      <p class="note">Paprika may look different in game.</p>
     </div>
   </section>
 
@@ -219,8 +260,76 @@ function filter() {
   }
   count.textContent = s ? (n ? n + " of " + MODS.length + " mods match" : "No mods match. Try another word.") : MODS.length + " mods";
 }
-q.addEventListener("input", filter);
+q.addEventListener("input", () => { filter(); drawMenu(); });
 filter();
+
+/* ---------- Menu style ---------- */
+const MENU_TABS = ["Combat","Movement","Render","Player","Utility","Config","Themes"];
+const CONFIG = [["Watermark","The red dye + Paprika Client in the top left"],["Real skins (orgSkin)","Load real skins on servers that don't show them"],["Baritone: avoid danger","Baritone kills hostile mobs that come close before continuing"],["Baritone: auto eat","Baritone eats when you're hungry during a task"]];
+const THEMES = [["Paprika","#FF2B2B"],["Ocean","#2BB5FF"],["Forest","#3CB043"],["Grape","#A64DFF"],["Sunset","#FF8C1A"],["Sakura","#FF6FAE"],["Mono","#DDDDDD"],["Midnight","#5B6CFF"],["Lava","#FF4500"],["Ice","#A0E9FF"],["Toxic","#7FFF00"],["Royal","#FFD700"],["Candy","#FF69B4"],["Nether","#B22222"],["End","#E0D68A"],["Mint","#3EB489"],["Coffee","#C69C6D"],["Neon","#00FFF0"]];
+const onSet = new Set();
+let tab = "Utility";
+const ptabs = document.getElementById("ptabs"), pgrid = document.getElementById("pgrid"), pfoot = document.getElementById("pfoot");
+for (const t of MENU_TABS) {
+  const b = document.createElement("button"); b.className = "ptab"; b.type = "button"; b.role = "tab"; b.textContent = t;
+  b.addEventListener("click", () => { tab = t; q.value = ""; filter(); drawMenu(); });
+  ptabs.appendChild(b);
+}
+function showDetail(name, text) {
+  detail.innerHTML = "";
+  const n = document.createElement("b"); n.textContent = name;
+  const d = document.createElement("span"); d.textContent = text;
+  detail.append(n, d);
+}
+function drawMenu() {
+  const s = q.value.trim().toLowerCase();
+  for (const b of ptabs.children) b.setAttribute("aria-selected", String(!s && b.textContent === tab));
+  pgrid.innerHTML = "";
+  let items;
+  if (s) items = MODS.filter(m => m.name.toLowerCase().includes(s) || m.desc.toLowerCase().includes(s)).map(m => ["mod", m]);
+  else if (tab === "Config") items = CONFIG.map(c => ["cfg", c]);
+  else if (tab === "Themes") items = THEMES.map(t => ["theme", t]);
+  else items = MODS.filter(m => m.cat === tab).map(m => ["mod", m]);
+  pfoot.textContent = s ? (items.length ? "Search results from every tab" : "No mods found")
+    : tab === "Themes" ? "Click a theme to use it" : tab === "Config" ? "Click to turn on / off"
+    : "Click a mod to toggle | pencil = settings | box = keybind | ESC to close";
+  for (const [kind, it] of items) {
+    const b = document.createElement("button"); b.type = "button"; b.className = "pbtn";
+    const nm = document.createElement("span"); nm.className = "nm";
+    if (kind === "theme") {
+      const sw = document.createElement("span"); sw.className = "sw"; sw.style.background = it[1];
+      nm.textContent = it[0]; nm.style.textAlign = "left"; b.append(sw, nm);
+      b.addEventListener("click", () => showDetail(it[0] + " theme", "Changes the menu colors to the " + it[0] + " theme."));
+    } else {
+      const key = kind === "mod" ? it.name : it[0];
+      nm.textContent = key; b.appendChild(nm);
+      if (kind === "mod") { const sq = document.createElement("span"); sq.className = "sq"; sq.title = "Settings (pencil)"; b.appendChild(sq); }
+      if (kind === "mod") { const k = document.createElement("span"); k.className = "key"; k.title = "Keybind"; b.appendChild(k); }
+      if (onSet.has(key)) b.classList.add("on");
+      b.addEventListener("click", () => {
+        onSet.has(key) ? onSet.delete(key) : onSet.add(key);
+        b.classList.toggle("on");
+        showDetail(key, kind === "mod" ? it.desc + " (" + it.cat + " tab)" : it[1]);
+      });
+    }
+    pgrid.appendChild(b);
+  }
+}
+drawMenu();
+
+const styleList = document.getElementById("styleList"), styleMenu = document.getElementById("styleMenu");
+const hint = document.getElementById("hint");
+function setStyle(menu) {
+  styleList.setAttribute("aria-pressed", String(!menu));
+  styleMenu.setAttribute("aria-pressed", String(menu));
+  cols.hidden = menu;
+  document.getElementById("pmenu").hidden = !menu;
+  hint.textContent = menu
+    ? "In the game: Right Shift or Delete opens the menu. Click a mod to turn it on, the pencil opens its settings, the box sets a keybind."
+    : "In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.";
+}
+styleList.addEventListener("click", () => setStyle(false));
+styleMenu.addEventListener("click", () => setStyle(true));
 </script>
 </body>
 </html>
