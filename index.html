@@ -151,13 +151,14 @@ footer p{margin:4px 0}
 .fx{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
 .fx.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}.fx{opacity:1;transform:none;transition:none}}
+@media (max-width:560px){header.top{flex-wrap:wrap;gap:12px;padding:18px 0}header.top nav{width:100%;display:flex;flex-wrap:wrap;gap:6px 18px}header.top nav a{margin-left:0}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</a>
-    <nav><a href="#mods">Mods</a><a href="#accounts">Accounts</a><a href="#install">Install</a><a href="#faq">FAQ</a><a href="docs.html">Docs</a></nav>
+    <nav><a href="#mods">Mods</a><a href="#accounts">Accounts</a><a href="install.html">Install</a><a href="#faq">FAQ</a><a href="docs.html">Docs</a></nav>
   </header>
 
   <div class="hero">
@@ -166,10 +167,9 @@ footer p{margin:4px 0}
       <p class="lead">A free Fabric hacked client with 103 mods for Minecraft 1.20 and 1.21.1. Base finding, a pathfinding bot, PvP mods and a HUD you can arrange yourself.</p>
     </div>
     <div class="get" id="download">
-      <h2>Download</h2>
-      <p class="sub">Version 1.0.0. Pick the one for your Minecraft version.</p>
-      <a class="dl" href="downloads/paprika-client-1.20-1.0.0.jar" download>Minecraft 1.20 / 1.20.1 <small>505 KB</small></a>
-      <a class="dl alt" href="downloads/paprika-client-1.21.1-1.0.0.jar" download>Minecraft 1.21 / 1.21.1 <small>500 KB</small></a>
+      <h2>Get Paprika</h2>
+      <p class="sub">Free for Minecraft 1.20 and 1.21.1. Every release and the install steps are on the Install page.</p>
+      <a class="dl" href="install.html">Go to releases <small>&rarr;</small></a>
       <p class="needs">Needs Fabric Loader 0.15 or newer and Fabric API. 1.20 needs Java 17, 1.21.1 needs Java 21.</p>
     </div>
   </div>
@@ -247,21 +247,10 @@ footer p{margin:4px 0}
     </div>
   </section>
 
-  <section id="install">
-    <h2 class="sec">Install in a few minutes</h2>
-    <p class="sec-sub">If you already play with Fabric mods, you only need step 3.</p>
-    <ol class="steps">
-      <li><b>Install Fabric</b><span>Get the Fabric installer from fabricmc.net and install Fabric Loader for your Minecraft version.</span></li>
-      <li><b>Add Fabric API</b><span>Download Fabric API for the same Minecraft version and put it in your <code>.minecraft/mods</code> folder.</span></li>
-      <li><b>Add Paprika</b><span>Download the Paprika jar for your version above and put it in the same <code>mods</code> folder.</span></li>
-      <li><b>Play</b><span>Start Minecraft with the Fabric profile and press Right Shift in game to open the menu.</span></li>
-    </ol>
-  </section>
-
   <section id="faq">
     <h2 class="sec">Questions</h2>
     <details><summary>Is it safe?</summary><p>Yes. Paprika is a normal Fabric mod. It doesn't collect your data or install anything, and the only thing it connects to besides your Minecraft server is Mojang's own skin servers, and only when you turn on Real skins. You don't have to take our word for it: a .jar file can be decompiled back into Java with a free decompiler, so anyone can open Paprika and read exactly what the code does.</p></details>
-    <details><summary>Which file do I download?</summary><p>The one that matches your Minecraft version: the first button for 1.20 and 1.20.1, the second for 1.21 and 1.21.1. Using the wrong one makes Minecraft refuse to start with a version error.</p></details>
+    <details><summary>Which file do I download?</summary><p>On the <a href="install.html">Install page</a>, pick the one that matches your Minecraft version: 1.20 for 1.20 and 1.20.1, 1.21.1 for 1.21 and 1.21.1. Using the wrong one makes Minecraft refuse to start with a version error.</p></details>
     <details><summary>Can I get banned for using it?</summary><p>On servers that don't allow clients, yes. Mods like the kill auras, Fly or Xray break the rules of most servers. Only use them in singleplayer or on servers that allow it, like anarchy servers.</p></details>
     <details><summary>Does it work with Sodium and other mods?</summary><p>Paprika is a normal Fabric mod, so it runs next to most other Fabric mods. Xray and a few render mods can behave differently with Sodium.</p></details>
     <details><summary>Where are my settings saved?</summary><p>In <code>.minecraft/config/paprika.json</code>. It keeps which mods are on, their settings, keybinds, friends, markers and your HUD layout.</p></details>
