@@ -108,6 +108,18 @@ ol.steps span{color:var(--ash);font-size:15px}
 details{border-bottom:1px solid var(--line);padding:14px 0}
 summary{cursor:pointer;font-weight:600;font-size:17px}
 details p{color:var(--ash);margin:10px 0 2px;max-width:70ch}
+.acct{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+ol.how{list-style:none;counter-reset:h;margin:0;padding:0}
+ol.how li{counter-increment:h;display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+ol.how li::before{content:counter(h);font:800 22px/1.1 var(--display);color:var(--paprika)}
+ol.how b{display:block;margin-bottom:2px}
+ol.how span{color:var(--ash);font-size:15px}
+.acct-note{background:var(--ember);border-radius:14px;padding:18px 20px}
+.acct-note h3{font:800 20px/1.2 var(--display);margin:0 0 8px}
+.acct-note p{margin:0 0 10px;color:var(--ash);font-size:15px}
+.acct-note p:last-child{margin-bottom:0}
+.acct-note strong{color:var(--bone);font-weight:600}
+@media (max-width:980px){.acct{grid-template-columns:1fr;gap:24px}}
 .cmds{margin-top:30px}
 .cmds h3{font:800 24px/1.1 var(--display);letter-spacing:-.015em;margin:0 0 4px}
 .cmds>p{color:var(--ash);margin:0 0 14px;max-width:62ch}
@@ -145,7 +157,7 @@ footer p{margin:4px 0}
 <div class="wrap">
   <header class="top">
     <a class="brand" href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</a>
-    <nav><a href="#mods">Mods</a><a href="#install">Install</a><a href="#faq">FAQ</a></nav>
+    <nav><a href="#mods">Mods</a><a href="#accounts">Accounts</a><a href="#install">Install</a><a href="#faq">FAQ</a></nav>
   </header>
 
   <div class="hero">
@@ -212,6 +224,26 @@ footer p{margin:4px 0}
       <div class="feat"><h3>A built-in pathfinding bot</h3><p>Type #b goto, #b mine or #b farm in chat. Baritone walks, digs, bridges and pillars for you, avoids lava and water, picks up what it mines and can farm crops or mobs on its own.</p></div>
       <div class="feat"><h3>Two menu styles and your own HUD layout</h3><p>Use the tabbed menu or the List style with every tab side by side, pick one of 18 themes, set Shift+R style keybinds, and drag your HUD where you want it in the HUD editor.</p></div>
       <div class="feat"><h3>PvP with a legit option</h3><p>Kill auras for players, mobs and monsters with an Obvious and a Legit mode, plus TriggerBot, AimAssist, AutoTotem, AutoGap, CrystalAura and WebAura.</p></div>
+    </div>
+  </section>
+
+  <section id="accounts">
+    <h2 class="sec">Account manager</h2>
+    <p class="sec-sub">Play under any name with cracked (offline) accounts, and switch back to your real Microsoft account whenever you want. No restart needed.</p>
+    <div class="acct">
+      <ol class="how">
+        <li><div><b>Open Singleplayer or Multiplayer</b><span>From the title screen, open either one.</span></div></li>
+        <li><div><b>Click Cracked</b><span>The Cracked button is in the top right. It opens the account manager.</span></div></li>
+        <li><div><b>Make an account</b><span>Click New account, type a name (3 to 16 letters, numbers or _) and click Create.</span></div></li>
+        <li><div><b>Switch to it</b><span>Click the account in the list. It turns green, which means you're now playing as that name.</span></div></li>
+        <li><div><b>Go back to your real account</b><span>Click Exit cracked. You're back on your Microsoft account and the green goes away.</span></div></li>
+      </ol>
+      <div class="acct-note">
+        <h3>Where cracked accounts work</h3>
+        <p><strong>Singleplayer and cracked (offline-mode) servers.</strong> On normal online servers you need your real account, because a cracked account has no Microsoft login behind it and the server will kick you.</p>
+        <p><strong>Your list is saved.</strong> The accounts you made stay there, but every time you start Minecraft you begin on your real account.</p>
+        <p><strong>Delete an account</strong> with the red trash can next to it. If you were using it, you go back to your real account.</p>
+      </div>
     </div>
   </section>
 
@@ -349,7 +381,7 @@ styleList.addEventListener("click", () => setStyle(false));
   const parts = document.querySelectorAll(
     "header.top .brand, header.top nav, .hero h1, .hero .lead, .get, " +
     "section h2.sec, section p.sec-sub, .menu .styles, .menu-top, .detail, .col, .pmenu, .hint, .note, .cmds h3, .cmds > p, .cmd-list, " +
-    ".feat, ol.steps li, details, footer .discord, footer p");
+    ".feat, ol.how li, .acct-note, ol.steps li, details, footer .discord, footer p");
   parts.forEach(el => el.classList.add("fx"));
   const io = new IntersectionObserver(entries => {
     const seen = entries.filter(e => e.isIntersecting).map(e => e.target);
