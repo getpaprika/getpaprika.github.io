@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paprika Client</title>
+<meta name="description" content="Paprika Client: a free Fabric client with 102 mods for Minecraft 1.20 and 1.21.1.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --smoke:#1c1310;      /* page: smoked-pepper brown */
+  --ember:#2a1b16;      /* panels */
+  --ember-2:#36231c;    /* raised */
+  --paprika:#e0362b;    /* brand */
+  --paprika-deep:#b5241b;
+  --toast:#f2a541;      /* "on" mods */
+  --bone:#f3eae3;       /* text */
+  --ash:#b19f95;        /* muted text */
+  --line:rgba(243,234,227,.10);
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --text:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--smoke);color:var(--bone);font:400 16px/1.6 var(--text);
+  background-image:radial-gradient(1200px 500px at 85% -10%,rgba(224,54,43,.22),transparent 60%),
+                   radial-gradient(800px 400px at -10% 30%,rgba(242,165,65,.07),transparent 60%);}
+a{color:var(--bone)}
+:focus-visible{outline:2px solid var(--toast);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* top bar */
+header.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 20px/1 var(--display);letter-spacing:-.01em}
+.brand img{width:30px;height:30px}
+nav a{color:var(--ash);text-decoration:none;font-weight:500;margin-left:22px}
+nav a:hover{color:var(--bone)}
+
+/* hero */
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:end}
+.hero h1{font:800 clamp(56px,10vw,128px)/.86 var(--display);letter-spacing:-.045em;margin:0;color:var(--bone)}
+.hero h1 span{display:block;color:var(--paprika)}
+.hero p.lead{font-size:19px;color:var(--ash);max-width:34ch;margin:22px 0 0}
+.get{background:var(--ember);border:1px solid var(--line);border-radius:18px;padding:22px}
+.get h2{font:800 22px/1.2 var(--display);margin:0 0 4px}
+.get .sub{color:var(--ash);font-size:14px;margin:0 0 18px}
+.dl{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;border-radius:12px;padding:14px 16px;margin-top:10px;
+  background:var(--paprika);color:#fff;font-weight:600;transition:background .15s}
+.dl:hover{background:var(--paprika-deep)}
+.dl small{font-weight:500;opacity:.85}
+.dl.alt{background:var(--ember-2);color:var(--bone)}
+.dl.alt:hover{background:#43291f}
+.get .needs{font-size:13px;color:var(--ash);margin:14px 0 0}
+
+/* the menu replica */
+section{padding:56px 0}
+h2.sec{font:800 clamp(32px,4.4vw,48px)/1 var(--display);letter-spacing:-.03em;margin:0 0 10px}
+p.sec-sub{color:var(--ash);max-width:60ch;margin:0 0 26px}
+.menu{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:20px;padding:18px}
+.menu-top{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:10px;background:#120c0a;border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.search input{all:unset;flex:1;font:500 15px var(--text);color:var(--bone)}
+.search input::placeholder{color:#7d6b62}
+.count{color:var(--ash);font-size:14px}
+.detail{min-height:58px;border-radius:12px;background:var(--ember);padding:12px 16px;margin-bottom:16px;border-left:3px solid var(--toast)}
+.detail b{font:800 18px var(--display);letter-spacing:-.01em}
+.detail span{display:block;color:var(--ash);font-size:14.5px}
+.cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
+.col h3{margin:0;background:var(--paprika);border-radius:10px 10px 0 0;padding:7px 10px;font:600 14px var(--text);text-align:center}
+.col ul{list-style:none;margin:0;padding:4px 0 6px;background:var(--ember);border-radius:0 0 10px 10px}
+.mod{all:unset;box-sizing:border-box;display:block;width:100%;padding:5px 10px 5px 12px;font-size:13.5px;color:#d9ccc4;cursor:pointer;
+  border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod:hover{background:rgba(255,255,255,.05);color:var(--bone)}
+.mod.on{border-left-color:var(--toast);background:rgba(242,165,65,.13);color:#fff}
+.mod.dim{opacity:.25}
+.mod:focus-visible{outline:2px solid var(--toast);outline-offset:-2px;border-radius:4px}
+.hint{color:var(--ash);font-size:13px;margin:14px 2px 0}
+
+/* highlights */
+.feats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 56px}
+.feat h3{font:800 22px/1.15 var(--display);letter-spacing:-.015em;margin:0 0 6px}
+.feat p{margin:0;color:var(--ash);max-width:52ch}
+
+/* install */
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+ol.steps li{counter-increment:s;border-top:2px solid var(--paprika);padding-top:14px}
+ol.steps li::before{content:counter(s);display:block;font:800 40px/1 var(--display);color:var(--paprika);margin-bottom:8px}
+ol.steps b{display:block;margin-bottom:4px}
+ol.steps span{color:var(--ash);font-size:15px}
+
+/* faq */
+details{border-bottom:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:600;font-size:17px}
+details p{color:var(--ash);margin:10px 0 2px;max-width:70ch}
+
+footer{border-top:1px solid var(--line);margin-top:30px;padding:26px 0 40px;color:#8d7b72;font-size:13.5px}
+footer p{margin:4px 0}
+
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:30px;padding-top:28px}
+  .cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  ol.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .wrap{padding:0 16px}
+  nav a{margin-left:14px}
+  .cols{grid-template-columns:1fr}
+  .feats{grid-template-columns:1fr}
+  ol.steps{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="#"><img src="favicon.svg" alt="">Paprika Client</a>
+    <nav><a href="#mods">Mods</a><a href="#install">Install</a><a href="#faq">FAQ</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Paprika <span>Client</span></h1>
+      <p class="lead">A free Fabric client with 102 mods for Minecraft 1.20 and 1.21.1. Base finding, a pathfinding bot, PvP mods and a HUD you can arrange yourself.</p>
+    </div>
+    <div class="get" id="download">
+      <h2>Download</h2>
+      <p class="sub">Version 1.0.0. Pick the one for your Minecraft version.</p>
+      <a class="dl" href="downloads/paprika-client-1.20-1.0.0.jar" download>Minecraft 1.20 / 1.20.1 <small>491 KB</small></a>
+      <a class="dl alt" href="downloads/paprika-client-1.21.1-1.0.0.jar" download>Minecraft 1.21 / 1.21.1 <small>487 KB</small></a>
+      <p class="needs">Needs Fabric Loader 0.15 or newer and Fabric API. 1.20 needs Java 17, 1.21.1 needs Java 21.</p>
+    </div>
+  </div>
+
+  <section id="mods">
+    <h2 class="sec">Every mod, laid out like the in-game menu</h2>
+    <p class="sec-sub">This is the List style of the Paprika menu. Click a mod to read what it does, or type to search.</p>
+    <div class="menu">
+      <div class="menu-top">
+        <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b19f95" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Search mods, e.g. ESP, aura, base" aria-label="Search mods"></label>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="detail" id="detail" aria-live="polite"><b>Pick a mod</b><span>Click any mod below to see what it does.</span></div>
+      <div class="cols" id="cols"></div>
+      <p class="hint">In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">What makes it Paprika</h2>
+    <p class="sec-sub">Most clients have aura and ESP. These are the parts you won't find everywhere.</p>
+    <div class="feats">
+      <div class="feat"><h3>Base hunting that tells real bases from dungeons</h3><p>BaseW recognizes villages, dungeons, igloos, witch huts and trial chambers, collects clues like signs with text, pets and concrete, and only warns "guaranteed base" when the evidence adds up. NewChunks, StructureW finders and Breadcrumbs help you follow the trail.</p></div>
+      <div class="feat"><h3>A built-in pathfinding bot</h3><p>Type #b goto, #b mine or #b farm in chat. Baritone walks, digs, bridges and pillars for you, avoids lava and water, picks up what it mines and can farm crops or mobs on its own.</p></div>
+      <div class="feat"><h3>Two menu styles and your own HUD layout</h3><p>Use the tabbed menu or the List style with every tab side by side, pick one of 18 themes, set Shift+R style keybinds, and drag your HUD where you want it in the HUD editor.</p></div>
+      <div class="feat"><h3>PvP with a legit option</h3><p>Kill auras for players, mobs and monsters with an Obvious and a Legit mode, plus TriggerBot, AimAssist, AutoTotem, AutoGap, CrystalAura and WebAura.</p></div>
+    </div>
+  </section>
+
+  <section id="install">
+    <h2 class="sec">Install in a few minutes</h2>
+    <p class="sec-sub">If you already play with Fabric mods, you only need step 3.</p>
+    <ol class="steps">
+      <li><b>Install Fabric</b><span>Get the Fabric installer from fabricmc.net and install Fabric Loader for your Minecraft version.</span></li>
+      <li><b>Add Fabric API</b><span>Download Fabric API for the same Minecraft version and put it in your <code>.minecraft/mods</code> folder.</span></li>
+      <li><b>Add Paprika</b><span>Download the Paprika jar for your version above and put it in the same <code>mods</code> folder.</span></li>
+      <li><b>Play</b><span>Start Minecraft with the Fabric profile and press Right Shift in game to open the menu.</span></li>
+    </ol>
+  </section>
+
+  <section id="faq">
+    <h2 class="sec">Questions</h2>
+    <details><summary>Which file do I download?</summary><p>The one that matches your Minecraft version: the first button for 1.20 and 1.20.1, the second for 1.21 and 1.21.1. Using the wrong one makes Minecraft refuse to start with a version error.</p></details>
+    <details><summary>Can I get banned for using it?</summary><p>On servers that don't allow clients, yes. Mods like the kill auras, Fly or Xray break the rules of most servers. Only use them in singleplayer or on servers that allow it, like anarchy servers.</p></details>
+    <details><summary>Does it work with Sodium and other mods?</summary><p>Paprika is a normal Fabric mod, so it runs next to most other Fabric mods. Xray and a few render mods can behave differently with Sodium.</p></details>
+    <details><summary>Where are my settings saved?</summary><p>In <code>.minecraft/config/paprika.json</code>. It keeps which mods are on, their settings, keybinds, friends, markers and your HUD layout.</p></details>
+    <details><summary>Some mods say "MAY NOT WORK!". Why?</summary><p>Mods like FastMine, ClickTP and Noclip do things servers check for. They work in singleplayer, but many servers move you back or ignore them.</p></details>
+  </section>
+
+  <footer>
+    <p>Paprika Client is a free fan-made mod. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+  </footer>
+</div>
+
+<script>
+const MODS = [{"name": "FPS", "desc": "Shows your FPS on screen", "cat": "Render"}, {"name": "Ping", "desc": "Shows your ping in ms", "cat": "Render"}, {"name": "CoordsHUD", "desc": "Shows your coordinates (and the matching Nether/Overworld ones)", "cat": "Render"}, {"name": "PotionHUD", "desc": "Shows your potion effects and how long they last", "cat": "Render"}, {"name": "AIID", "desc": "Am I in danger? Warns when a hostile/neutral mob is coming at you", "cat": "Utility"}, {"name": "Fullbright", "desc": "Makes everything fully bright", "cat": "Render"}, {"name": "Xray", "desc": "See ores, beds, chests and furnaces through walls", "cat": "Render"}, {"name": "NoFall", "desc": "Disables fall damage", "cat": "Player"}, {"name": "Velocity", "desc": "You take no knockback at all", "cat": "Player"}, {"name": "Fly", "desc": "Fly like in creative mode", "cat": "Movement"}, {"name": "Jesus", "desc": "Walk on water (sneak to go under)", "cat": "Movement"}, {"name": "Spider", "desc": "Climb walls like a spider", "cat": "Movement"}, {"name": "EntityCulling", "desc": "Hides entities you can't see to boost FPS", "cat": "Render"}, {"name": "ShulkerBoxTooltip", "desc": "Hover a shulker box to see its contents", "cat": "Utility"}, {"name": "Saturation", "desc": "Shows your saturation above the hotbar", "cat": "Utility"}, {"name": "ESPP", "desc": "Red boxes around players, visible through walls", "cat": "Render"}, {"name": "ESPE", "desc": "Green boxes around passive mobs", "cat": "Render"}, {"name": "ESPM", "desc": "Orange boxes around hostile and neutral mobs", "cat": "Render"}, {"name": "TracersP", "desc": "Lines to players (same color as ESPP)", "cat": "Render"}, {"name": "TracersE", "desc": "Lines to passive mobs (same color as ESPE)", "cat": "Render"}, {"name": "TracersM", "desc": "Lines to hostile and neutral mobs (same color as ESPM)", "cat": "Render"}, {"name": "AutoCrystal", "desc": "Hold right click with crystals to place + break them in a loop", "cat": "Combat"}, {"name": "AutoCrits", "desc": "Every sword/axe hit becomes a critical hit", "cat": "Combat"}, {"name": "NExp", "desc": "Removes explosion particles", "cat": "Render"}, {"name": "PlayerW", "desc": "Warns you when a player is within 200 blocks", "cat": "Utility"}, {"name": "SpecW", "desc": "Warns you when someone is in spectator mode", "cat": "Utility"}, {"name": "BaseW", "desc": "Finds possible bases (chests, spawners, shulkers, armor stands, item frames that aren't natural)", "cat": "Utility"}, {"name": "Baritone", "desc": "Pathfinding bot - type #b commands in chat", "cat": "Movement"}, {"name": "AutoTotem", "desc": "In a fight (player within 40 blocks), puts a totem in your off hand 0.2s after one pops", "cat": "Combat"}, {"name": "TNTCountdown", "desc": "Shows a timer above lit TNT until it explodes", "cat": "Utility"}, {"name": "AutoMLG", "desc": "Places water under you before you hit the ground, then picks it up", "cat": "Utility"}, {"name": "ToggleSprint", "desc": "Sprints automatically when you walk forward", "cat": "Movement"}, {"name": "BoatFly", "desc": "Fly your boat where you look by holding W", "cat": "Movement"}, {"name": "AntiCobweb", "desc": "Cobwebs don't slow you down", "cat": "Movement"}, {"name": "AntiEdgeFall", "desc": "Stops you walking off edges without crouching", "cat": "Movement"}, {"name": "PKillAura", "desc": "Automatically hits players in reach when your attack is recharged", "cat": "Combat"}, {"name": "EKillAura", "desc": "Automatically hits passive mobs (not villagers, pets or named mobs)", "cat": "Combat"}, {"name": "MKillAura", "desc": "Hits hostile mobs, and neutral mobs only after they hit you", "cat": "Combat"}, {"name": "Freecam", "desc": "Fly your camera around while your body stays still", "cat": "Utility"}, {"name": "Scaffold", "desc": "Places blocks under you as you walk so you can't fall", "cat": "Movement"}, {"name": "AutoAnchor", "desc": "Place an anchor and it charges, shields and explodes it for you", "cat": "Combat"}, {"name": "StrongholdW", "desc": "Finds strongholds in loaded chunks and shows them in red", "cat": "Utility"}, {"name": "FortressW", "desc": "Finds nether fortresses in loaded chunks and shows them in purple", "cat": "Utility"}, {"name": "BastionW", "desc": "Finds bastions in loaded chunks and shows them in gold", "cat": "Utility"}, {"name": "AncientCityW", "desc": "Finds ancient cities in loaded chunks and shows them in teal", "cat": "Utility"}, {"name": "VillageW", "desc": "Finds villages in loaded chunks and shows them in lime", "cat": "Utility"}, {"name": "HealthHUD", "desc": "Shows other players' health next to their name tag", "cat": "Render"}, {"name": "FastLadder", "desc": "Climb ladders and vines twice as fast", "cat": "Movement"}, {"name": "NoHurtCam", "desc": "Removes the camera shake when you get hurt", "cat": "Render"}, {"name": "NoFire", "desc": "Removes the fire on your screen when you burn", "cat": "Render"}, {"name": "NoPumpkin", "desc": "Removes the pumpkin overlay when you wear a carved pumpkin", "cat": "Render"}, {"name": "AutoReplenish", "desc": "Refills empty hotbar slots and replaces broken tools", "cat": "Player"}, {"name": "ArrayList", "desc": "Shows the mods that are on in the top right", "cat": "Render"}, {"name": "Nuker", "desc": "Digs out everything in a 5x5x5 area around you with the right tools", "cat": "Player"}, {"name": "Tunnel", "desc": "Digs a 3x3x3 area around you, never the blocks below you", "cat": "Player"}, {"name": "DangerousNetherrack", "desc": "Highlights hanging blocks with a deep hole under them in crimson (any block in the Nether, netherrack elsewhere)", "cat": "Render"}, {"name": "BlockESP", "desc": "Highlights the block you choose (pencil -> Block, e.g. diamond_ore) in rainbow through walls", "cat": "Render"}, {"name": "LavaESP", "desc": "Fills lava in see-through orange so you can see it through walls", "cat": "Render"}, {"name": "ItemESP", "desc": "Purple boxes around dropped items, through walls", "cat": "Render"}, {"name": "ItemTracers", "desc": "Purple lines to dropped items", "cat": "Render"}, {"name": "NewChunks", "desc": "New chunks in red (never generated before), old chunks in green (setting)", "cat": "Render"}, {"name": "FreeLook", "desc": "Hold Alt to look around your character in third person without turning it", "cat": "Render"}, {"name": "WebAura", "desc": "Places a cobweb in players near you, then switches back to what you were holding", "cat": "Combat"}, {"name": "FriendW", "desc": "Tells you when a friend is near (cyan, under PlayerW)", "cat": "Utility"}, {"name": "FastMine", "desc": "Mine blocks faster in survival (like Haste)", "cat": "Player"}, {"name": "AirJump", "desc": "Jump again while you're in the air", "cat": "Movement"}, {"name": "ClickTP", "desc": "Left click a block to teleport there", "cat": "Movement"}, {"name": "Noclip", "desc": "Walk through walls and ceilings (the floor still holds you)", "cat": "Movement"}, {"name": "FakeLag", "desc": "Makes you look laggy to other players", "cat": "Movement"}, {"name": "Blink", "desc": "Server thinks you stand still while you move, a clone shows where it thinks you are", "cat": "Movement"}, {"name": "Speedometer", "desc": "Shows your speed in blocks per second", "cat": "Render"}, {"name": "TriggerBotP", "desc": "Hits players when your crosshair is on them", "cat": "Combat"}, {"name": "TriggerBotE", "desc": "Hits passive mobs when your crosshair is on them", "cat": "Combat"}, {"name": "TriggerBotM", "desc": "Hits monsters and neutral mobs when your crosshair is on them", "cat": "Combat"}, {"name": "AimAssistP", "desc": "Pulls your aim toward players", "cat": "Combat"}, {"name": "AimAssistE", "desc": "Pulls your aim toward passive mobs", "cat": "Combat"}, {"name": "AimAssistM", "desc": "Pulls your aim toward monsters and neutral mobs", "cat": "Combat"}, {"name": "AutoGap", "desc": "Eats a golden apple (enchanted too) when your health is low", "cat": "Combat"}, {"name": "Hitboxes", "desc": "Makes other players' and mobs' hitboxes bigger", "cat": "Combat"}, {"name": "BlockOutline", "desc": "Colored outline + fill on the block you look at (pick the color yourself)", "cat": "Render"}, {"name": "AntiSpam", "desc": "Repeated chat messages show once with a counter (x2, x3...)", "cat": "Utility"}, {"name": "AutoLogout", "desc": "Logs you out when a player gets close", "cat": "Utility"}, {"name": "AutoArmor", "desc": "Automatically wears your best armor", "cat": "Combat"}, {"name": "AutoEat", "desc": "Eats automatically when you get too hungry to sprint", "cat": "Player"}, {"name": "BowAimbot", "desc": "Aims your bow at players and hostile mobs", "cat": "Combat"}, {"name": "CrystalAura", "desc": "Places and blows up crystals next to enemy players", "cat": "Combat"}, {"name": "Speed", "desc": "Walk faster", "cat": "Movement"}, {"name": "NoSlow", "desc": "No slowdown from using items, soul sand or honey", "cat": "Movement"}, {"name": "ElytraFly", "desc": "Double jump to glide like with an elytra, hold Ctrl to boost", "cat": "Movement"}, {"name": "Trajectories", "desc": "Shows where your projectile will fly and land", "cat": "Render"}, {"name": "NoWeather", "desc": "Removes rain, snow and thunder", "cat": "Render"}, {"name": "Zoom", "desc": "Lets you hold Z to zoom in", "cat": "Render"}, {"name": "Breadcrumbs", "desc": "Draws a line where you have walked (kept until you turn it off)", "cat": "Render"}, {"name": "PChams", "desc": "Players get a red glowing outline through walls (friends in aqua)", "cat": "Render"}, {"name": "EChams", "desc": "Passive mobs get a green glowing outline through walls", "cat": "Render"}, {"name": "MChams", "desc": "Hostile and neutral mobs get an orange glowing outline through walls", "cat": "Render"}, {"name": "FastBlocks", "desc": "Place and break blocks without the delay", "cat": "Player"}, {"name": "AutoFish", "desc": "Fishes automatically when you're near water", "cat": "Utility"}, {"name": "AntiAfk", "desc": "Keeps jumping so you don't get kicked for AFK", "cat": "Player"}, {"name": "ChestStealer", "desc": "Buttons to take all blocks or all items from a chest", "cat": "Player"}, {"name": "DeathW", "desc": "Marks where you died and tells you in chat", "cat": "Utility"}, {"name": "ArmorHUD", "desc": "Shows your armor next to the off-hand slot", "cat": "Render"}];
+const TABS = ["Combat","Player","Movement","Render","Utility"];
+const cols = document.getElementById("cols"), q = document.getElementById("q");
+const detail = document.getElementById("detail"), count = document.getElementById("count");
+const buttons = [];
+for (const tab of TABS) {
+  const col = document.createElement("div"); col.className = "col";
+  const h = document.createElement("h3"); h.textContent = tab; col.appendChild(h);
+  const ul = document.createElement("ul");
+  for (const m of MODS.filter(x => x.cat === tab)) {
+    const li = document.createElement("li");
+    const b = document.createElement("button"); b.className = "mod"; b.type = "button"; b.textContent = m.name; b.title = m.desc;
+    b.addEventListener("click", () => {
+      b.classList.toggle("on");
+      detail.innerHTML = "";
+      const n = document.createElement("b"); n.textContent = m.name;
+      const d = document.createElement("span"); d.textContent = m.desc + " (" + tab + " tab)";
+      detail.append(n, d);
+    });
+    li.appendChild(b); ul.appendChild(li); buttons.push([b, m]);
+  }
+  col.appendChild(ul); cols.appendChild(col);
+}
+function filter() {
+  const s = q.value.trim().toLowerCase();
+  let n = 0;
+  for (const [b, m] of buttons) {
+    const hit = !s || m.name.toLowerCase().includes(s) || m.desc.toLowerCase().includes(s);
+    b.classList.toggle("dim", !hit); if (hit) n++;
+  }
+  count.textContent = s ? (n ? n + " of " + MODS.length + " mods match" : "No mods match. Try another word.") : MODS.length + " mods";
+}
+q.addEventListener("input", filter);
+filter();
+</script>
+</body>
+</html>
