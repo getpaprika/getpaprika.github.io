@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paprika Client</title>
 <meta name="description" content="Paprika Client: a free Fabric client with 102 mods for Minecraft 1.20 and 1.21.1.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -35,7 +35,7 @@ a{color:var(--bone)}
 /* top bar */
 header.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 20px/1 var(--display);letter-spacing:-.01em}
-.brand img{width:30px;height:30px}
+.brand img{width:32px;height:32px;image-rendering:pixelated}
 nav a{color:var(--ash);text-decoration:none;font-weight:500;margin-left:22px}
 nav a:hover{color:var(--bone)}
 
@@ -90,7 +90,7 @@ p.sec-sub{color:var(--ash);max-width:60ch;margin:0 0 26px}
 /* Menu style replica: the tabbed in-game menu (blue = off, green = on) */
 .pmenu{max-width:640px;background:rgba(0,0,0,.45);border:1px solid rgba(224,54,43,.55);border-radius:4px;font-family:var(--text)}
 .pmenu-head{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(224,54,43,.55);color:var(--paprika);font-weight:600}
-.pmenu-head img{width:18px;height:18px}
+.pmenu-head img{width:16px;height:16px;image-rendering:pixelated}
 .ptabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;padding:8px 10px}
 .ptab{all:unset;cursor:pointer;text-align:center;padding:4px 2px;background:rgba(255,255,255,.12);font-size:12.5px;color:#fff;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ptab:hover{background:rgba(255,255,255,.2)}
@@ -141,13 +141,16 @@ footer p{margin:4px 0}
   .feats{grid-template-columns:1fr}
   ol.steps{grid-template-columns:1fr}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}}
+/* fade in, top to bottom (classes added by the script, so without JS everything just shows) */
+.fx{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.fx.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}.fx{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#"><img src="favicon.svg" alt="">Paprika Client</a>
+    <a class="brand" href="#"><img src="paprika.png" alt="">Paprika Client</a>
     <nav><a href="#mods">Mods</a><a href="#install">Install</a><a href="#faq">FAQ</a></nav>
   </header>
 
@@ -181,7 +184,7 @@ footer p{margin:4px 0}
       <div class="detail" id="detail" aria-live="polite"><b>Pick a mod</b><span>Click any mod below to see what it does.</span></div>
       <div class="cols" id="cols"></div>
       <div class="pmenu" id="pmenu" hidden>
-        <div class="pmenu-head"><img src="favicon.svg" alt="">Paprika Client</div>
+        <div class="pmenu-head"><img src="paprika.png" alt="">Paprika Client</div>
         <div class="ptabs" id="ptabs" role="tablist" aria-label="Menu tabs"></div>
         <div class="pgrid" id="pgrid"></div>
         <div class="pfoot" id="pfoot">Click a mod to toggle | pencil = settings | box = keybind | ESC to close</div>
@@ -329,6 +332,30 @@ function setStyle(menu) {
     : "In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.";
 }
 styleList.addEventListener("click", () => setStyle(false));
+
+/* ---------- fade in, from the top of the page to the bottom ---------- */
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const parts = document.querySelectorAll(
+    "header.top .brand, header.top nav, .hero h1, .hero .lead, .get, " +
+    "section h2.sec, section p.sec-sub, .menu .styles, .menu-top, .detail, .col, .pmenu, .hint, .note, " +
+    ".feat, ol.steps li, details, footer p");
+  parts.forEach(el => el.classList.add("fx"));
+  let queue = [], timer = null;
+  function next() {           // show waiting parts one after another, in page order
+    if (!queue.length) { timer = null; return; }
+    queue.shift().classList.add("in");
+    timer = setTimeout(next, 90);
+  }
+  const io = new IntersectionObserver(entries => {
+    const seen = entries.filter(e => e.isIntersecting).map(e => e.target);
+    seen.forEach(el => io.unobserve(el));
+    queue.push(...seen);
+    queue.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
+    if (!timer) next();
+  }, { threshold: 0.12 });
+  parts.forEach(el => io.observe(el));
+})();
 styleMenu.addEventListener("click", () => setStyle(true));
 </script>
 </body>
