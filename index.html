@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Paprika Client</title>
 <meta name="description" content="Paprika Client: a free Fabric client with 102 mods for Minecraft 1.20 and 1.21.1.">
-<link rel="icon" href="favicon.png" type="image/png">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACE0lEQVR4nO2azy8DURDHX/1IkUhcaNK0JCS0hJuTW7Pas6OT8Ac4SuoiLvwZ4r9QaeIPcHLQqhKRLW05ISgNz9V3qvuyWTqSN5/bt7P73mR2Zrr73lNKEARBEARBEAQbCXV6wu3kvP6uG0+PYN+tlDrqU1cnJ/uPSAC4HeDGd73RGvbLUnQAdN7F4e5f6qBpT8jGprSX3S/WZ4AEgNsBbnpMF9CaX3dmwe4WLkHnb/D+1cUJz/HTqgz60I2AzsYUzL+cGKFDBOoJ1meABIDbAW6MPYDiFrFmC7V+0KnYG+i93AVoJ44lenaH7wU69Ap6Y2nB059ljc8wpD6hJ+xUyp49wfoMkABwO8CNsQdsFY9JDeF7weAHmjPJcdCOvgJ9Wg+DrjafQa+lJ0Hv585Br2TQHp/G9wxdqik/WJ8BEgBuB7gJ/C1Aod8GlOp7A/QqqWlKKt7taT84qnjaTVifARIAbge48f0tQDHVfKEWJr80fryu3Xh0zdBRaA9pOr4/rM8ACQC3A9z4Xw8gNdpa48ht01DzZH3B9EzofKbxTVifARIAbge48b2vRvfmhgci7S5VSinljJKtRLKG1/I/T9YMTTVv2ks0YX0GSAC4HeAm8Hkc2hPmhsbAPhPBfQJTTUd7+0CfPFx7zi/nAwIiAeB2gJtfP5O3GU9AT9A60JGiPz83aH0GSAC4HRAEQRAEQeDiC9EqloXtb1meAAAAAElFTkSuQmCC" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -126,6 +126,11 @@ details{border-bottom:1px solid var(--line);padding:14px 0}
 summary{cursor:pointer;font-weight:600;font-size:17px}
 details p{color:var(--ash);margin:10px 0 2px;max-width:70ch}
 
+/* Discord button */
+.discord{display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;text-decoration:none;font-weight:600;
+  padding:12px 20px;border-radius:12px;margin:0 0 18px;transition:background .15s}
+.discord:hover{background:#4752c4}
+.discord svg{width:22px;height:22px;flex:none}
 footer{border-top:1px solid var(--line);margin-top:30px;padding:26px 0 40px;color:#8d7b72;font-size:13.5px}
 footer p{margin:4px 0}
 
@@ -150,7 +155,7 @@ footer p{margin:4px 0}
 <body>
 <div class="wrap">
   <header class="top">
-    <a class="brand" href="#"><img src="paprika.png" alt="">Paprika Client</a>
+    <a class="brand" href="#"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</a>
     <nav><a href="#mods">Mods</a><a href="#install">Install</a><a href="#faq">FAQ</a></nav>
   </header>
 
@@ -184,7 +189,7 @@ footer p{margin:4px 0}
       <div class="detail" id="detail" aria-live="polite"><b>Pick a mod</b><span>Click any mod below to see what it does.</span></div>
       <div class="cols" id="cols"></div>
       <div class="pmenu" id="pmenu" hidden>
-        <div class="pmenu-head"><img src="paprika.png" alt="">Paprika Client</div>
+        <div class="pmenu-head"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</div>
         <div class="ptabs" id="ptabs" role="tablist" aria-label="Menu tabs"></div>
         <div class="pgrid" id="pgrid"></div>
         <div class="pfoot" id="pfoot">Click a mod to toggle | pencil = settings | box = keybind | ESC to close</div>
@@ -226,6 +231,10 @@ footer p{margin:4px 0}
   </section>
 
   <footer>
+    <a class="discord" href="https://discord.gg/bVtSsdgZXB" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.39 2.8a13.9 13.9 0 0 0-.63 1.3 18.4 18.4 0 0 0-5.52 0 13 13 0 0 0-.64-1.3 19.7 19.7 0 0 0-4.93 1.53C.53 9.05-.32 13.6.1 18.1a19.9 19.9 0 0 0 6.04 3.05c.49-.66.92-1.36 1.29-2.1a12.9 12.9 0 0 1-2.03-.97c.17-.12.34-.25.5-.38a14.2 14.2 0 0 0 12.2 0c.16.13.33.26.5.38-.65.38-1.33.71-2.04.98.37.73.8 1.43 1.29 2.09a19.8 19.8 0 0 0 6.05-3.05c.5-5.2-.84-9.72-3.55-13.73zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.95-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg>
+      Join the Paprika Discord
+    </a>
     <p>Paprika Client is a free fan-made mod. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
   </footer>
 </div>
@@ -339,20 +348,15 @@ styleList.addEventListener("click", () => setStyle(false));
   const parts = document.querySelectorAll(
     "header.top .brand, header.top nav, .hero h1, .hero .lead, .get, " +
     "section h2.sec, section p.sec-sub, .menu .styles, .menu-top, .detail, .col, .pmenu, .hint, .note, " +
-    ".feat, ol.steps li, details, footer p");
+    ".feat, ol.steps li, details, footer .discord, footer p");
   parts.forEach(el => el.classList.add("fx"));
-  let queue = [], timer = null;
-  function next() {           // show waiting parts one after another, in page order
-    if (!queue.length) { timer = null; return; }
-    queue.shift().classList.add("in");
-    timer = setTimeout(next, 90);
-  }
+  // everything that comes into view together fades in top to bottom, the whole group within about 0.7s
   const io = new IntersectionObserver(entries => {
     const seen = entries.filter(e => e.isIntersecting).map(e => e.target);
     seen.forEach(el => io.unobserve(el));
-    queue.push(...seen);
-    queue.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
-    if (!timer) next();
+    seen.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
+    const step = Math.min(90, 700 / Math.max(1, seen.length));
+    seen.forEach((el, i) => setTimeout(() => el.classList.add("in"), i * step));
   }, { threshold: 0.12 });
   parts.forEach(el => io.observe(el));
 })();
