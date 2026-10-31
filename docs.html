@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paprika Client docs</title>
+<meta name="description" content="How to use Paprika Client: every mod and its settings, Baritone commands, configs, HUD editor and troubleshooting.">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACE0lEQVR4nO2azy8DURDHX/1IkUhcaNK0JCS0hJuTW7Pas6OT8Ac4SuoiLvwZ4r9QaeIPcHLQqhKRLW05ISgNz9V3qvuyWTqSN5/bt7P73mR2Zrr73lNKEARBEARBEAQbCXV6wu3kvP6uG0+PYN+tlDrqU1cnJ/uPSAC4HeDGd73RGvbLUnQAdN7F4e5f6qBpT8jGprSX3S/WZ4AEgNsBbnpMF9CaX3dmwe4WLkHnb/D+1cUJz/HTqgz60I2AzsYUzL+cGKFDBOoJ1meABIDbAW6MPYDiFrFmC7V+0KnYG+i93AVoJ44lenaH7wU69Ap6Y2nB059ljc8wpD6hJ+xUyp49wfoMkABwO8CNsQdsFY9JDeF7weAHmjPJcdCOvgJ9Wg+DrjafQa+lJ0Hv585Br2TQHp/G9wxdqik/WJ8BEgBuB7gJ/C1Aod8GlOp7A/QqqWlKKt7taT84qnjaTVifARIAbge48f0tQDHVfKEWJr80fryu3Xh0zdBRaA9pOr4/rM8ACQC3A9z4Xw8gNdpa48ht01DzZH3B9EzofKbxTVifARIAbge48b2vRvfmhgci7S5VSinljJKtRLKG1/I/T9YMTTVv2ks0YX0GSAC4HeAm8Hkc2hPmhsbAPhPBfQJTTUd7+0CfPFx7zi/nAwIiAeB2gJtfP5O3GU9AT9A60JGiPz83aH0GSAC4HRAEQRAEQeDiC9EqloXtb1meAAAAAElFTkSuQmCC" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>:root{
+  --smoke:#1c1310;
+  --ember:#2a1b16;
+  --ember-2:#36231c;
+  --paprika:#e0362b;
+  --paprika-deep:#b5241b;
+  --toast:#f2a541;
+  --bone:#f3eae3;
+  --ash:#b19f95;
+  --line:rgba(243,234,227,.10);
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --text:"Inter",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--smoke);color:var(--bone);font:400 16px/1.6 var(--text);
+  background-image:radial-gradient(1200px 500px at 85% -10%,rgba(224,54,43,.22),transparent 60%),
+                   radial-gradient(800px 400px at -10% 30%,rgba(242,165,65,.07),transparent 60%);}
+a{color:var(--bone)}
+:focus-visible{outline:2px solid var(--toast);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 20px/1 var(--display);letter-spacing:-.01em}
+.brand img{width:32px;height:32px;image-rendering:pixelated}
+nav a{color:var(--ash);text-decoration:none;font-weight:500;margin-left:22px}
+nav a:hover{color:var(--bone)}
+.hero{padding:56px 0 40px;display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:end}
+.hero h1{font:800 clamp(56px,10vw,128px)/.86 var(--display);letter-spacing:-.045em;margin:0;color:var(--bone)}
+.hero h1 span{display:block;color:var(--paprika)}
+.hero p.lead{font-size:19px;color:var(--ash);max-width:34ch;margin:22px 0 0}
+.get{background:var(--ember);border:1px solid var(--line);border-radius:18px;padding:22px}
+.get h2{font:800 22px/1.2 var(--display);margin:0 0 4px}
+.get .sub{color:var(--ash);font-size:14px;margin:0 0 18px}
+.dl{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;border-radius:12px;padding:14px 16px;margin-top:10px;
+  background:var(--paprika);color:#fff;font-weight:600;transition:background .15s}
+.dl:hover{background:var(--paprika-deep)}
+.dl small{font-weight:500;opacity:.85}
+.dl.alt{background:var(--ember-2);color:var(--bone)}
+.dl.alt:hover{background:#43291f}
+.get .needs{font-size:13px;color:var(--ash);margin:14px 0 0}
+section{padding:56px 0}
+h2.sec{font:800 clamp(32px,4.4vw,48px)/1 var(--display);letter-spacing:-.03em;margin:0 0 10px}
+p.sec-sub{color:var(--ash);max-width:60ch;margin:0 0 26px}
+.menu{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:20px;padding:18px}
+.menu-top{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:16px}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:10px;background:#120c0a;border:1px solid var(--line);border-radius:10px;padding:10px 14px}
+.search input{all:unset;flex:1;font:500 15px var(--text);color:var(--bone)}
+.search input::placeholder{color:#7d6b62}
+.count{color:var(--ash);font-size:14px}
+.detail{min-height:58px;border-radius:12px;background:var(--ember);padding:12px 16px;margin-bottom:16px;border-left:3px solid var(--toast)}
+.detail b{font:800 18px var(--display);letter-spacing:-.01em}
+.detail span{display:block;color:var(--ash);font-size:14.5px}
+.cols[hidden],.pmenu[hidden]{display:none}
+.cols{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
+.col h3{margin:0;background:var(--paprika);border-radius:10px 10px 0 0;padding:7px 10px;font:600 14px var(--text);text-align:center}
+.col ul{list-style:none;margin:0;padding:4px 0 6px;background:var(--ember);border-radius:0 0 10px 10px}
+.mod{all:unset;box-sizing:border-box;display:block;width:100%;padding:5px 10px 5px 12px;font-size:13.5px;color:#d9ccc4;cursor:pointer;
+  border-left:2px solid transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mod:hover{background:rgba(255,255,255,.05);color:var(--bone)}
+.mod.on{border-left-color:var(--toast);background:rgba(242,165,65,.13);color:#fff}
+.mod.dim{opacity:.25}
+.mod:focus-visible{outline:2px solid var(--toast);outline-offset:-2px;border-radius:4px}
+.hint{color:var(--ash);font-size:13px;margin:14px 2px 0}
+.note{color:#8d7b72;font-size:13px;font-style:italic;margin:6px 2px 0}
+.styles{display:inline-flex;background:#120c0a;border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.styles button{all:unset;cursor:pointer;padding:7px 14px;border-radius:7px;font:600 14px var(--text);color:var(--ash)}
+.styles button[aria-pressed="true"]{background:var(--paprika);color:#fff}
+.styles button:focus-visible{outline:2px solid var(--toast);outline-offset:2px}
+.pmenu{max-width:640px;background:rgba(0,0,0,.45);border:1px solid rgba(224,54,43,.55);border-radius:4px;font-family:var(--text)}
+.pmenu-head{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid rgba(224,54,43,.55);color:var(--paprika);font-weight:600}
+.pmenu-head img{width:16px;height:16px;image-rendering:pixelated}
+.ptabs{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;padding:8px 10px}
+.ptab{all:unset;cursor:pointer;text-align:center;padding:4px 2px;background:rgba(255,255,255,.12);font-size:12.5px;color:#fff;border-radius:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ptab:hover{background:rgba(255,255,255,.2)}
+.ptab[aria-selected="true"]{background:rgba(224,54,43,.6)}
+.ptab:focus-visible{outline:2px solid var(--toast);outline-offset:1px}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:6px 10px 10px;min-height:150px;align-content:start}
+.pbtn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:6px;height:30px;padding:0 6px 0 8px;background:rgba(58,123,255,.55);color:#fff;font-size:13px;border-radius:2px}
+.pbtn:hover{background:rgba(90,150,255,.65)}
+.pbtn.on{background:rgba(51,212,90,.55)}
+.pbtn.on:hover{background:rgba(83,232,120,.65)}
+.pbtn .nm{flex:1;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbtn .sq{width:13px;height:13px;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.35) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 9l1-3 4-4 2 2-4 4z' fill='%23bbbbbb'/%3E%3Cpath d='M2 10l1-1 1 1z' fill='%23777777'/%3E%3C/svg%3E") center/9px no-repeat;flex:none}
+.pbtn .key{width:30px;height:13px;border:1px solid rgba(255,255,255,.5);background:rgba(0,0,0,.35);flex:none}
+.pbtn:focus-visible{outline:2px solid var(--toast);outline-offset:1px}
+.pbtn .sw{width:9px;height:9px;flex:none}
+.pfoot{text-align:center;color:#999;font-size:12px;padding:6px 10px 9px}
+@media (max-width:620px){.ptabs{grid-template-columns:repeat(4,minmax(0,1fr))}.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.feats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:34px 56px}
+.feat h3{font:800 22px/1.15 var(--display);letter-spacing:-.015em;margin:0 0 6px}
+.feat p{margin:0;color:var(--ash);max-width:52ch}
+ol.steps{list-style:none;padding:0;margin:0;counter-reset:s;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+ol.steps li{counter-increment:s;border-top:2px solid var(--paprika);padding-top:14px}
+ol.steps li::before{content:counter(s);display:block;font:800 40px/1 var(--display);color:var(--paprika);margin-bottom:8px}
+ol.steps b{display:block;margin-bottom:4px}
+ol.steps span{color:var(--ash);font-size:15px}
+details{border-bottom:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:600;font-size:17px}
+details p{color:var(--ash);margin:10px 0 2px;max-width:70ch}
+.acct{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+ol.how{list-style:none;counter-reset:h;margin:0;padding:0}
+ol.how li{counter-increment:h;display:grid;grid-template-columns:34px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+ol.how li::before{content:counter(h);font:800 22px/1.1 var(--display);color:var(--paprika)}
+ol.how b{display:block;margin-bottom:2px}
+ol.how span{color:var(--ash);font-size:15px}
+.acct-note{background:var(--ember);border-radius:14px;padding:18px 20px}
+.acct-note h3{font:800 20px/1.2 var(--display);margin:0 0 8px}
+.acct-note p{margin:0 0 10px;color:var(--ash);font-size:15px}
+.acct-note p:last-child{margin-bottom:0}
+.acct-note strong{color:var(--bone);font-weight:600}
+@media (max-width:980px){.acct{grid-template-columns:1fr;gap:24px}}
+.cmds{margin-top:30px}
+.cmds h3{font:800 24px/1.1 var(--display);letter-spacing:-.015em;margin:0 0 4px}
+.cmds>p{color:var(--ash);margin:0 0 14px;max-width:62ch}
+.cmd-list{margin:0;display:grid;grid-template-columns:max-content 1fr;border-top:1px solid var(--line)}
+.cmd-list dt,.cmd-list dd{margin:0;padding:10px 0;border-bottom:1px solid var(--line)}
+.cmd-list dt{padding-right:28px}
+.cmd-list code{font:600 14px var(--text);font-feature-settings:"calt" 0;background:var(--ember-2);color:var(--bone);padding:3px 8px;border-radius:6px;white-space:nowrap}
+.cmd-list dd{color:var(--ash);font-size:15px}
+.cmd-list dd code{font-weight:500;padding:1px 6px}
+@media (max-width:620px){.cmd-list{grid-template-columns:1fr}.cmd-list dt{border-bottom:0;padding-bottom:2px}.cmd-list dd{padding-top:2px}}
+.discord{display:inline-flex;align-items:center;gap:10px;background:#5865F2;color:#fff;text-decoration:none;font-weight:600;
+  padding:12px 20px;border-radius:12px;margin:0 0 18px;transition:background .15s}
+.discord:hover{background:#4752c4}
+.discord svg{width:22px;height:22px;flex:none}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:26px 0 40px;color:#8d7b72;font-size:13.5px}
+footer p{margin:4px 0}
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;gap:30px;padding-top:28px}
+  .cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  ol.steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .wrap{padding:0 16px}
+  nav a{margin-left:14px}
+  .cols{grid-template-columns:1fr}
+  .feats{grid-template-columns:1fr}
+  ol.steps{grid-template-columns:1fr}
+}
+.fx{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.fx.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}.fx{opacity:1;transform:none;transition:none}}
+
+.docs{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;padding:20px 0 40px}
+.side{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;padding-right:6px}
+.side a{display:block;color:var(--ash);text-decoration:none;padding:5px 10px;border-radius:8px;font-size:15px}
+.side a:hover{color:var(--bone);background:var(--ember)}
+.side a.sub{padding-left:22px;font-size:14px}
+.side a.back{color:var(--paprika);font-weight:600;margin-bottom:10px}
+.doc h1{font:800 clamp(40px,6vw,64px)/.95 var(--display);letter-spacing:-.035em;margin:0 0 10px}
+.doc>p.lead{color:var(--ash);font-size:18px;max-width:60ch;margin:0 0 20px}
+.doc [id]{scroll-margin-top:20px}
+.doc section{padding:34px 0 10px;border-top:1px solid var(--line)}
+.doc h2{font:800 clamp(28px,3.6vw,38px)/1.05 var(--display);letter-spacing:-.025em;margin:0 0 12px}
+.doc h3{font:800 22px/1.2 var(--display);margin:26px 0 8px;color:var(--paprika)}
+.doc p,.doc li{max-width:72ch}
+.doc p{color:#ddd0c8;margin:0 0 12px}
+.doc code{font:600 14px var(--text);font-feature-settings:"calt" 0;background:var(--ember-2);color:var(--bone);padding:2px 7px;border-radius:6px}
+.doc kbd{font:600 13px var(--text);background:var(--ember-2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+.doc ul.plain{color:#ddd0c8;padding-left:20px;margin:0 0 12px}
+.doc ul.plain li{margin:4px 0}
+.modlist{margin:0}
+.modlist dt{font:800 18px var(--display);margin-top:16px}
+.modlist dd{margin:2px 0 0;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.modlist dd p{margin:0 0 4px}
+.modlist .more{color:var(--ash);font-size:15px}
+.warn{color:#ff6b5f;font-style:normal;font-weight:600}
+ul.settings{list-style:none;margin:6px 0 0;padding:0}
+ul.settings li{font-size:15px;padding:3px 0 3px 12px;border-left:2px solid var(--ember-2);margin:2px 0}
+ul.settings b{color:var(--bone)}
+ul.settings span{color:var(--ash)}
+.cmd-list{margin:0;display:grid;grid-template-columns:max-content 1fr;border-top:1px solid var(--line)}
+.cmd-list dt,.cmd-list dd{margin:0;padding:10px 0;border-bottom:1px solid var(--line)}
+.cmd-list dt{padding-right:24px}
+.cmd-list dd{color:var(--ash);font-size:15px}
+.themes{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px;padding:0;list-style:none}
+.themes li{background:var(--ember);border-radius:8px;padding:4px 10px;font-size:14px}
+@media (max-width:900px){
+  .docs{grid-template-columns:1fr;gap:10px}
+  .side{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--line);padding-bottom:12px}
+  .side a.sub{display:none}
+  .side a.back{width:100%}
+}
+@media (max-width:620px){.cmd-list{grid-template-columns:1fr}.cmd-list dt{border-bottom:0;padding-bottom:2px}.cmd-list dd{padding-top:2px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="index.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</a>
+    <nav><a href="index.html#download">Download</a><a href="index.html#mods">Mods</a><a href="docs.html" aria-current="page" style="color:var(--bone)">Docs</a></nav>
+  </header>
+
+  <div class="docs">
+    <nav class="side" aria-label="Docs">
+      <a class="back" href="index.html">&larr; Back to Paprika</a>
+      <a href="#start">Getting started</a>
+      <a href="#mods">Mods</a>
+      <a class="sub" href="#tab-combat">Combat</a><a class="sub" href="#tab-player">Player</a><a class="sub" href="#tab-movement">Movement</a><a class="sub" href="#tab-render">Render</a><a class="sub" href="#tab-utility">Utility</a>
+      <a href="#baritone">Baritone</a>
+      <a href="#commands">Chat commands</a>
+      <a href="#configs">Configs</a>
+      <a href="#hud">HUD editor</a>
+      <a href="#looks">Themes and menu style</a>
+      <a href="#friends">Friends</a>
+      <a href="#markers">Markers and areas</a>
+      <a href="#accounts">Accounts</a>
+      <a href="#trouble">Troubleshooting</a>
+    </nav>
+
+    <main class="doc">
+      <h1>Paprika docs</h1>
+      <p class="lead">Everything Paprika can do and how to use it. New here? Start with Getting started, then look up any mod below.</p>
+
+      <section id="start">
+        <h2>Getting started</h2>
+        <p>Install Fabric Loader and Fabric API for your Minecraft version, then put the Paprika jar for that version in your <code>.minecraft/mods</code> folder. The download page has the <a href="index.html#install">step by step guide</a>.</p>
+        <h3>Opening the menu</h3>
+        <p>Press <kbd>Right Shift</kbd> or <kbd>Delete</kbd> in game. Press it again or <kbd>Esc</kbd> to close it. You can change these keys in Minecraft's Controls settings.</p>
+        <h3>Turning mods on and changing settings</h3>
+        <ul class="plain">
+          <li><b>Menu style:</b> click a mod to turn it on (green) or off (blue). The pencil opens its settings, the box next to it sets a keybind.</li>
+          <li><b>List style:</b> left click a mod to turn it on, right click it to open its settings, description and keybind.</li>
+          <li>Start typing anywhere in the menu to search all mods.</li>
+          <li>Everything is saved straight away in <code>.minecraft/config/paprika.json</code>.</li>
+        </ul>
+        <h3>Keybinds</h3>
+        <p>Click the keybind box, then press a key. You can hold Shift, Ctrl or Alt with it, for example <kbd>Shift</kbd>+<kbd>R</kbd>: the keybind is set when you let go. <kbd>Esc</kbd> while binding removes the keybind. Pressing the keybind in game turns the mod on or off.</p>
+      </section>
+
+      <section id="mods">
+        <h2>Mods</h2>
+        <p>All 103 mods by tab, with what every setting does. Mods marked "may not work on servers" do things most servers check for: they work in singleplayer but servers can undo them.</p>
+        <h3 id="tab-combat">Combat</h3>
+<dl class="modlist">
+<dt id="mod-autocrystal">AutoCrystal</dt><dd><p>Hold right click with crystals to place + break them in a loop.</p><ul class="settings"><li><b>Speed</b> <span>Places + breaks per second. 5/s by default, from 1 to 20/s.</span></li><li><b>Random timing</b> <span>Makes the rhythm uneven so it looks more natural. on by default.</span></li></ul></dd>
+<dt id="mod-autocrits">AutoCrits</dt><dd><p>Every sword/axe hit becomes a critical hit.</p></dd>
+<dt id="mod-autototem">AutoTotem</dt><dd><p>In a fight (player within 40 blocks), puts a totem in your off hand 0.2s after one pops.</p><ul class="settings"><li><b>Delay</b> <span>How long to wait after a totem pops. 0.2 s by default, from 0 to 1 s.</span></li><li><b>Only in fights</b> <span>Only works when another player is close. on by default.</span></li><li><b>Fight range</b> <span>How close a player has to be to count as a fight. 40 blocks by default, from 5 to 100 blocks.</span></li></ul></dd>
+<dt id="mod-pkillaura">PKillAura</dt><dd><p>Automatically hits players in reach when your attack is recharged.</p><p class="more">Legit mode only hits what you can see and turns your head and body (not your camera) to the target.</p><ul class="settings"><li><b>Reach</b> <span>How far you hit (normal survival reach is 3). 3 blocks by default, from 1 to 6 blocks.</span></li><li><b>Mode</b> <span>Obvious: hits through walls without looking. Legit: only what you can see, turns your head/body to it (camera stays). Obvious or Legit, Obvious by default.</span></li></ul></dd>
+<dt id="mod-ekillaura">EKillAura</dt><dd><p>Automatically hits passive mobs (not villagers, pets or named mobs).</p><p class="more">Legit mode only hits what you can see and turns your head and body (not your camera) to the target.</p><ul class="settings"><li><b>Reach</b> <span>How far you hit (normal survival reach is 3). 3 blocks by default, from 1 to 6 blocks.</span></li><li><b>Mode</b> <span>Obvious: hits through walls without looking. Legit: only what you can see, turns your head/body to it (camera stays). Obvious or Legit, Obvious by default.</span></li></ul></dd>
+<dt id="mod-mkillaura">MKillAura</dt><dd><p>Hits hostile mobs, and neutral mobs only after they hit you.</p><p class="more">Legit mode only hits what you can see and turns your head and body (not your camera) to the target.</p><ul class="settings"><li><b>Reach</b> <span>How far you hit (normal survival reach is 3). 3 blocks by default, from 1 to 6 blocks.</span></li><li><b>Mode</b> <span>Obvious: hits through walls without looking. Legit: only what you can see, turns your head/body to it (camera stays). Obvious or Legit, Obvious by default.</span></li></ul></dd>
+<dt id="mod-autoanchor">AutoAnchor</dt><dd><p>Place an anchor and it charges, shields and explodes it for you.</p></dd>
+<dt id="mod-webaura">WebAura</dt><dd><p>Places a cobweb in players near you, then switches back to what you were holding.</p><p class="more">Cobwebs must be in your hotbar.</p><ul class="settings"><li><b>Range</b> <span>How far away a player can be. 4.5 blocks by default, from 2 to 6 blocks.</span></li><li><b>Delay</b> <span>Time between cobwebs. 0.5 s by default, from 0.1 to 3 s.</span></li></ul></dd>
+<dt id="mod-triggerbotp">TriggerBotP</dt><dd><p>Hits players when your crosshair is on them.</p></dd>
+<dt id="mod-triggerbote">TriggerBotE</dt><dd><p>Hits passive mobs when your crosshair is on them.</p></dd>
+<dt id="mod-triggerbotm">TriggerBotM</dt><dd><p>Hits monsters and neutral mobs when your crosshair is on them.</p></dd>
+<dt id="mod-aimassistp">AimAssistP</dt><dd><p>Pulls your aim toward players.</p><ul class="settings"><li><b>Range</b> <span>How far away targets can be. 5 blocks by default, from 2 to 10 blocks.</span></li><li><b>FOV</b> <span>Only targets this close to your crosshair. 60° by default, from 10 to 180°.</span></li><li><b>Strength</b> <span>How hard it pulls your aim. 3 by default, from 1 to 10.</span></li></ul></dd>
+<dt id="mod-aimassiste">AimAssistE</dt><dd><p>Pulls your aim toward passive mobs.</p><ul class="settings"><li><b>Range</b> <span>How far away targets can be. 5 blocks by default, from 2 to 10 blocks.</span></li><li><b>FOV</b> <span>Only targets this close to your crosshair. 60° by default, from 10 to 180°.</span></li><li><b>Strength</b> <span>How hard it pulls your aim. 3 by default, from 1 to 10.</span></li></ul></dd>
+<dt id="mod-aimassistm">AimAssistM</dt><dd><p>Pulls your aim toward monsters and neutral mobs.</p><ul class="settings"><li><b>Range</b> <span>How far away targets can be. 5 blocks by default, from 2 to 10 blocks.</span></li><li><b>FOV</b> <span>Only targets this close to your crosshair. 60° by default, from 10 to 180°.</span></li><li><b>Strength</b> <span>How hard it pulls your aim. 3 by default, from 1 to 10.</span></li></ul></dd>
+<dt id="mod-autogap">AutoGap</dt><dd><p>Eats a golden apple (enchanted too) when your health is low.</p><p class="more">Golden apples must be in your hotbar.</p><ul class="settings"><li><b>Health</b> <span>Eat when your health is this low or lower (20 = full, 2 = one heart). 10 hp by default, from 2 to 19 hp.</span></li><li><b>Enchanted first</b> <span>Eat enchanted golden apples before normal ones. on by default.</span></li></ul></dd>
+<dt id="mod-hitboxes">Hitboxes</dt><dd><p>Makes other players&#x27; and mobs&#x27; hitboxes bigger.</p><ul class="settings"><li><b>Size</b> <span>How much bigger hitboxes are (on every side). 0.3 blocks by default, from 0.1 to 1.0 blocks.</span></li></ul></dd>
+<dt id="mod-autoarmor">AutoArmor</dt><dd><p>Automatically wears your best armor.</p></dd>
+<dt id="mod-bowaimbot">BowAimbot</dt><dd><p>Aims your bow at players and hostile mobs.</p><ul class="settings"><li><b>Range</b> <span>How far away targets can be. 100 blocks by default, from 10 to 200 blocks.</span></li><li><b>Aim angle</b> <span>How far from your crosshair a target can be. 60° by default, from 10 to 180°.</span></li></ul></dd>
+<dt id="mod-crystalaura">CrystalAura</dt><dd><p>Places and blows up crystals next to enemy players.</p><ul class="settings"><li><b>Target range</b> <span>How far away enemies are targeted. 12 blocks by default, from 4 to 30 blocks.</span></li><li><b>Speed</b> <span>Places + breaks per second. 5/s by default, from 1 to 20/s.</span></li></ul></dd>
+<dt id="mod-reach">Reach</dt><dd><p>Hit and reach blocks from further away (up to 7 blocks). <em class="warn">May not work on servers.</em></p><ul class="settings"><li><b>Entity reach</b> <span>How far you can hit players and mobs (normal is 3). 4 blocks by default, from 3 to 7 blocks.</span></li><li><b>Block reach</b> <span>How far you can break and place blocks (normal is 4.5). 5.5 blocks by default, from 4.5 to 7 blocks.</span></li></ul></dd>
+</dl>
+<h3 id="tab-player">Player</h3>
+<dl class="modlist">
+<dt id="mod-nofall">NoFall</dt><dd><p>Disables fall damage.</p></dd>
+<dt id="mod-velocity">Velocity</dt><dd><p>You take no knockback at all.</p><ul class="settings"><li><b>Horizontal</b> <span>How much sideways knockback you still take. 0% by default, from 0 to 100%.</span></li><li><b>Vertical</b> <span>How much upward knockback you still take. 0% by default, from 0 to 100%.</span></li></ul></dd>
+<dt id="mod-autoreplenish">AutoReplenish</dt><dd><p>Refills empty hotbar slots and replaces broken tools.</p></dd>
+<dt id="mod-nuker">Nuker</dt><dd><p>Digs out everything in a 5x5x5 area around you with the right tools.</p><ul class="settings"><li><b>Radius</b> <span>Blocks to each side (2 = 5x5x5). 2 blocks by default, from 1 to 4 blocks.</span></li></ul></dd>
+<dt id="mod-tunnel">Tunnel</dt><dd><p>Digs a 3x3x3 area around you, never the blocks below you.</p></dd>
+<dt id="mod-fastmine">FastMine</dt><dd><p>Mine blocks faster in survival (like Haste). <em class="warn">May not work on servers.</em></p><ul class="settings"><li><b>Speed</b> <span>Mining speed multiplier. Above 1x blocks may come back on normal servers. 1.0x by default, from 1.0 to 3.0x.</span></li><li><b>Safe break</b> <span>Break at 70% mined - the most normal servers accept (about 1.4x faster). on by default.</span></li></ul></dd>
+<dt id="mod-autoeat">AutoEat</dt><dd><p>Eats automatically when you get too hungry to sprint.</p><ul class="settings"><li><b>Start at</b> <span>Hunger points (out of 20) where it starts eating - you can&#x27;t sprint at 6. 6 hunger by default, from 1 to 19 hunger.</span></li><li><b>Stop at</b> <span>Hunger points where it stops eating. 18 hunger by default, from 2 to 20 hunger.</span></li></ul></dd>
+<dt id="mod-fastblocks">FastBlocks</dt><dd><p>Place and break blocks without the delay.</p></dd>
+<dt id="mod-antiafk">AntiAfk</dt><dd><p>Keeps jumping so you don&#x27;t get kicked for AFK.</p></dd>
+<dt id="mod-cheststealer">ChestStealer</dt><dd><p>Buttons to take all blocks or all items from a chest.</p></dd>
+</dl>
+<h3 id="tab-movement">Movement</h3>
+<dl class="modlist">
+<dt id="mod-fly">Fly</dt><dd><p>Fly like in creative mode.</p><ul class="settings"><li><b>Fly speed</b> <span>1 = normal creative flying speed. 1x by default, from 0.5 to 10x.</span></li></ul></dd>
+<dt id="mod-jesus">Jesus</dt><dd><p>Walk on water (sneak to go under).</p></dd>
+<dt id="mod-spider">Spider</dt><dd><p>Climb walls like a spider.</p></dd>
+<dt id="mod-baritone">Baritone</dt><dd><p>Pathfinding bot - type #b commands in chat.</p><p class="more">Turn the mod on, then use #b commands in chat. See the Baritone section.</p></dd>
+<dt id="mod-togglesprint">ToggleSprint</dt><dd><p>Sprints automatically when you walk forward.</p></dd>
+<dt id="mod-boatfly">BoatFly</dt><dd><p>Fly your boat where you look by holding W.</p><ul class="settings"><li><b>Speed</b> <span>How fast the boat flies. 25 blocks/s by default, from 1 to 200 blocks/s.</span></li></ul></dd>
+<dt id="mod-anticobweb">AntiCobweb</dt><dd><p>Cobwebs don&#x27;t slow you down.</p></dd>
+<dt id="mod-antiedgefall">AntiEdgeFall</dt><dd><p>Stops you walking off edges without crouching.</p></dd>
+<dt id="mod-scaffold">Scaffold</dt><dd><p>Places blocks under you as you walk so you can&#x27;t fall.</p></dd>
+<dt id="mod-fastladder">FastLadder</dt><dd><p>Climb ladders and vines twice as fast.</p><ul class="settings"><li><b>Climb speed</b> <span>How many times faster than normal you climb. 2x by default, from 1.5 to 5x.</span></li></ul></dd>
+<dt id="mod-airjump">AirJump</dt><dd><p>Jump again while you&#x27;re in the air.</p></dd>
+<dt id="mod-clicktp">ClickTP</dt><dd><p>Left click a block to teleport there. <em class="warn">May not work on servers.</em></p><ul class="settings"><li><b>Range</b> <span>How far away you can click. 50 blocks by default, from 5 to 100 blocks.</span></li></ul></dd>
+<dt id="mod-noclip">Noclip</dt><dd><p>Walk through walls and ceilings (the floor still holds you). <em class="warn">May not work on servers.</em></p></dd>
+<dt id="mod-fakelag">FakeLag</dt><dd><p>Makes you look laggy to other players.</p><ul class="settings"><li><b>Delay</b> <span>How late your packets arrive. 200 ms by default, from 10 to 1000 ms.</span></li></ul></dd>
+<dt id="mod-blink">Blink</dt><dd><p>Server thinks you stand still while you move, a clone shows where it thinks you are.</p><p class="more">A clone of you stays where the server thinks you are until you turn it off.</p></dd>
+<dt id="mod-speed">Speed</dt><dd><p>Walk faster.</p><ul class="settings"><li><b>Speed</b> <span>How fast you walk. 10 blocks/s by default, from 1 to 100 blocks/s.</span></li></ul></dd>
+<dt id="mod-noslow">NoSlow</dt><dd><p>No slowdown from using items, soul sand or honey.</p></dd>
+<dt id="mod-elytrafly">ElytraFly</dt><dd><p>Double jump to glide like with an elytra, hold Ctrl to boost.</p></dd>
+</dl>
+<h3 id="tab-render">Render</h3>
+<dl class="modlist">
+<dt id="mod-fps">FPS</dt><dd><p>Shows your FPS on screen.</p></dd>
+<dt id="mod-ping">Ping</dt><dd><p>Shows your ping in ms.</p></dd>
+<dt id="mod-coordshud">CoordsHUD</dt><dd><p>Shows your coordinates (and the matching Nether/Overworld ones).</p></dd>
+<dt id="mod-potionhud">PotionHUD</dt><dd><p>Shows your potion effects and how long they last.</p></dd>
+<dt id="mod-fullbright">Fullbright</dt><dd><p>Makes everything fully bright.</p></dd>
+<dt id="mod-xray">Xray</dt><dd><p>See ores, beds, chests and furnaces through walls.</p></dd>
+<dt id="mod-entityculling">EntityCulling</dt><dd><p>Hides entities you can&#x27;t see to boost FPS.</p></dd>
+<dt id="mod-espp">ESPP</dt><dd><p>Red boxes around players, visible through walls.</p></dd>
+<dt id="mod-espe">ESPE</dt><dd><p>Green boxes around passive mobs.</p></dd>
+<dt id="mod-espm">ESPM</dt><dd><p>Orange boxes around hostile and neutral mobs.</p></dd>
+<dt id="mod-tracersp">TracersP</dt><dd><p>Lines to players (same color as ESPP).</p></dd>
+<dt id="mod-tracerse">TracersE</dt><dd><p>Lines to passive mobs (same color as ESPE).</p></dd>
+<dt id="mod-tracersm">TracersM</dt><dd><p>Lines to hostile and neutral mobs (same color as ESPM).</p></dd>
+<dt id="mod-nexp">NExp</dt><dd><p>Removes explosion particles.</p></dd>
+<dt id="mod-healthhud">HealthHUD</dt><dd><p>Shows other players&#x27; health next to their name tag.</p></dd>
+<dt id="mod-nohurtcam">NoHurtCam</dt><dd><p>Removes the camera shake when you get hurt.</p></dd>
+<dt id="mod-nofire">NoFire</dt><dd><p>Removes the fire on your screen when you burn.</p></dd>
+<dt id="mod-nopumpkin">NoPumpkin</dt><dd><p>Removes the pumpkin overlay when you wear a carved pumpkin.</p></dd>
+<dt id="mod-arraylist">ArrayList</dt><dd><p>Shows the mods that are on in the top right.</p></dd>
+<dt id="mod-dangerousnetherrack">DangerousNetherrack</dt><dd><p>Highlights hanging blocks with a deep hole under them in crimson (any block in the Nether, netherrack elsewhere).</p><ul class="settings"><li><b>Range</b> <span>How far around you it looks. 16 blocks by default, from 8 to 32 blocks.</span></li><li><b>Hole depth</b> <span>How deep the empty space under it must be. 3 blocks by default, from 2 to 10 blocks.</span></li></ul></dd>
+<dt id="mod-blockesp">BlockESP</dt><dd><p>Highlights the block you choose (pencil -&gt; Block, e.g. diamond_ore) in rainbow through walls.</p><p class="more">Several blocks: separate them with commas, e.g. diamond_ore, deepslate_diamond_ore.</p><ul class="settings"><li><b>Block</b> <span>Block id to highlight, e.g. diamond_ore (more: separate with commas). default: diamond_ore.</span></li><li><b>Chams</b> <span>See-through rainbow fill inside the box. on by default.</span></li></ul></dd>
+<dt id="mod-lavaesp">LavaESP</dt><dd><p>Fills lava in see-through orange so you can see it through walls.</p><ul class="settings"><li><b>Range</b> <span>How far around you lava is shown. 32 blocks by default, from 8 to 64 blocks.</span></li></ul></dd>
+<dt id="mod-itemesp">ItemESP</dt><dd><p>Purple boxes around dropped items, through walls.</p></dd>
+<dt id="mod-itemtracers">ItemTracers</dt><dd><p>Purple lines to dropped items.</p></dd>
+<dt id="mod-newchunks">NewChunks</dt><dd><p>New chunks in red (never generated before), old chunks in green (setting).</p><p class="more">Works best near water and lava: it spots new chunks by how liquids flow when the chunk arrives.</p><ul class="settings"><li><b>Show old</b> <span>Also show chunks that already existed before (green). off by default.</span></li></ul></dd>
+<dt id="mod-freelook">FreeLook</dt><dd><p>Hold Alt to look around your character in third person without turning it.</p><p class="more">Hold Alt. Your keys keep working while you look around.</p></dd>
+<dt id="mod-speedometer">Speedometer</dt><dd><p>Shows your speed in blocks per second.</p></dd>
+<dt id="mod-blockoutline">BlockOutline</dt><dd><p>Colored outline + fill on the block you look at (pick the color yourself).</p><ul class="settings"><li><b>Red</b> <span>Red part of the color. 255 by default, from 0 to 255.</span></li><li><b>Green</b> <span>Green part of the color. 43 by default, from 0 to 255.</span></li><li><b>Blue</b> <span>Blue part of the color. 43 by default, from 0 to 255.</span></li><li><b>Fill</b> <span>Fill the block with the color at 50% see-through. on by default.</span></li></ul></dd>
+<dt id="mod-trajectories">Trajectories</dt><dd><p>Shows where your projectile will fly and land.</p></dd>
+<dt id="mod-noweather">NoWeather</dt><dd><p>Removes rain, snow and thunder.</p></dd>
+<dt id="mod-zoom">Zoom</dt><dd><p>Lets you hold Z to zoom in.</p><ul class="settings"><li><b>Zoom</b> <span>How much it zooms in. 4x by default, from 1.5 to 10x.</span></li></ul></dd>
+<dt id="mod-breadcrumbs">Breadcrumbs</dt><dd><p>Draws a line where you have walked (kept until you turn it off).</p></dd>
+<dt id="mod-pchams">PChams</dt><dd><p>Players get a red glowing outline through walls (friends in aqua).</p></dd>
+<dt id="mod-echams">EChams</dt><dd><p>Passive mobs get a green glowing outline through walls.</p></dd>
+<dt id="mod-mchams">MChams</dt><dd><p>Hostile and neutral mobs get an orange glowing outline through walls.</p></dd>
+<dt id="mod-armorhud">ArmorHUD</dt><dd><p>Shows your armor next to the off-hand slot.</p></dd>
+</dl>
+<h3 id="tab-utility">Utility</h3>
+<dl class="modlist">
+<dt id="mod-aiid">AIID</dt><dd><p>Am I in danger? Warns when a hostile/neutral mob is coming at you.</p><ul class="settings"><li><b>Range</b> <span>How far away mobs are watched. 32 blocks by default, from 8 to 64 blocks.</span></li></ul></dd>
+<dt id="mod-shulkerboxtooltip">ShulkerBoxTooltip</dt><dd><p>Hover a shulker box to see its contents.</p></dd>
+<dt id="mod-saturation">Saturation</dt><dd><p>Shows your saturation above the hotbar.</p></dd>
+<dt id="mod-playerw">PlayerW</dt><dd><p>Warns you when a player is within 200 blocks.</p><ul class="settings"><li><b>Range</b> <span>How close a player has to be to warn you. 200 blocks by default, from 16 to 512 blocks.</span></li></ul></dd>
+<dt id="mod-specw">SpecW</dt><dd><p>Warns you when someone is in spectator mode.</p></dd>
+<dt id="mod-basew">BaseW</dt><dd><p>Finds possible bases (chests, spawners, shulkers, armor stands, item frames that aren&#x27;t natural).</p><p class="more">Yellow = possible base, crimson = guaranteed base (WARNING title + sound), white = natural structure. Natural structures (villages, dungeons, igloos, witch huts, trial chambers...) are recognised and ignored.</p><ul class="settings"><li><b>Group distance</b> <span>Finds closer together than this are one base. 64 blocks by default, from 8 to 128 blocks.</span></li><li><b>Show natural</b> <span>Also show natural structures (dungeons, mineshafts...), labelled Natural. off by default.</span></li><li><b>Include spawners</b> <span>ON: every spawner is a guaranteed base, and spawners no longer cancel the chests next to them. off by default.</span></li></ul></dd>
+<dt id="mod-tntcountdown">TNTCountdown</dt><dd><p>Shows a timer above lit TNT until it explodes.</p><ul class="settings"><li><b>Range</b> <span>TNT further away than this has no timer. 64 blocks by default, from 16 to 128 blocks.</span></li></ul></dd>
+<dt id="mod-automlg">AutoMLG</dt><dd><p>Places water under you before you hit the ground, then picks it up.</p></dd>
+<dt id="mod-freecam">Freecam</dt><dd><p>Fly your camera around while your body stays still.</p></dd>
+<dt id="mod-strongholdw">StrongholdW</dt><dd><p>Finds strongholds in loaded chunks and shows them in red.</p></dd>
+<dt id="mod-fortressw">FortressW</dt><dd><p>Finds nether fortresses in loaded chunks and shows them in purple.</p></dd>
+<dt id="mod-bastionw">BastionW</dt><dd><p>Finds bastions in loaded chunks and shows them in gold.</p></dd>
+<dt id="mod-ancientcityw">AncientCityW</dt><dd><p>Finds ancient cities in loaded chunks and shows them in teal.</p></dd>
+<dt id="mod-villagew">VillageW</dt><dd><p>Finds villages in loaded chunks and shows them in lime.</p></dd>
+<dt id="mod-friendw">FriendW</dt><dd><p>Tells you when a friend is near (cyan, under PlayerW).</p><ul class="settings"><li><b>Range</b> <span>How close a friend has to be. 200 blocks by default, from 16 to 512 blocks.</span></li></ul></dd>
+<dt id="mod-antispam">AntiSpam</dt><dd><p>Repeated chat messages show once with a counter (x2, x3..).</p></dd>
+<dt id="mod-autologout">AutoLogout</dt><dd><p>Logs you out when a player gets close.</p><ul class="settings"><li><b>Distance</b> <span>How close a player can get before you&#x27;re logged out. 6 blocks by default, from 1 to 128 blocks.</span></li><li><b>Turn off after</b> <span>Turn AutoLogout off after it logs you out (so you can rejoin). on by default.</span></li></ul></dd>
+<dt id="mod-autofish">AutoFish</dt><dd><p>Fishes automatically when you&#x27;re near water.</p><ul class="settings"><li><b>Water range</b> <span>How far it looks for water. 8 blocks by default, from 3 to 16 blocks.</span></li></ul></dd>
+<dt id="mod-deathw">DeathW</dt><dd><p>Marks where you died and tells you in chat.</p></dd>
+</dl>
+      </section>
+
+      <section id="baritone">
+        <h2>Baritone</h2>
+        <p>Baritone is a bot that walks, digs, bridges and pillars for you. Turn on the <b>Baritone</b> mod (Movement tab), then type these commands in chat. The first time, a tutorial page shows them too.</p>
+        <dl class="cmd-list">
+<dt><code>#b goto x y z</code></dt><dd>Walks to those coordinates.</dd>
+<dt><code>#b goto [player/entity]</code></dt><dd>Walks to that player or mob.</dd>
+<dt><code>#b gotomarker [name]</code></dt><dd>Walks to one of your markers (press M to make markers).</dd>
+<dt><code>#b follow [player/entity]</code></dt><dd>Keeps following that player or mob until you use #b stop.</dd>
+<dt><code>#b stop</code></dt><dd>Stops whatever Baritone is doing.</dd>
+<dt><code>#b mine [block]</code></dt><dd>Finds the closest block of that type, mines it and keeps going until you stop it.</dd>
+<dt><code>#b minea</code></dt><dd>Mines everything inside your areas (make areas with #a).</dd>
+<dt><code>#b fillawith [block]</code></dt><dd>Fills your areas with a block from your inventory.</dd>
+<dt><code>#b farm</code></dt><dd>Plants seeds on all farmland within 64 blocks, grows them with bone meal, harvests, collects and repeats.</dd>
+<dt><code>#b farm [mob]</code></dt><dd>Goes to the nearest mob of that type, kills it and picks up the loot. Several at once: #b farm cow, pig, chicken.</dd>
+<dt><code>#b avoidDanger</code></dt><dd>On or off: Baritone first kills hostile mobs that come close, then continues.</dd>
+<dt><code>#b autoEat</code></dt><dd>On or off: Baritone eats when you get hungry during a task.</dd>
+<dt><code>#b tutorial</code></dt><dd>Opens the Baritone tutorial page again.</dd>
+        </dl>
+        <h3>Good to know</h3>
+        <ul class="plain">
+          <li>To bridge and pillar it needs throwaway blocks in your inventory: cobblestone, dirt, netherrack or planks.</li>
+          <li>It never digs into lava or water, also not through sand or gravel that has lava on top.</li>
+          <li>It picks up what it mines before going on.</li>
+          <li>If it gets stuck going back and forth, it tries another way, and gives up after a few tries.</li>
+        </ul>
+      </section>
+
+      <section id="commands">
+        <h2>Chat commands</h2>
+        <p>Type these in chat. They're never sent to the server, and anything else starting with # isn't sent either.</p>
+        <dl class="cmd-list">
+<dt><code>#help</code></dt><dd>Shows the list of commands in chat.</dd>
+<dt><code>#c waterMark</code></dt><dd>Turns the watermark in the top left on or off.</dd>
+<dt><code>#m [equation]</code></dt><dd>A calculator: + - x / and ^ or @ for powers, for example #m 28+6x9.</dd>
+<dt><code>#a x1 y1 z1 x2 y2 z2</code></dt><dd>Draws an area between two corners. #a ~ x y z starts from where you stand.</dd>
+<dt><code>#a deleteall</code></dt><dd>Deletes all your areas.</dd>
+<dt><code>#friend add [name]</code></dt><dd>Adds a friend.</dd>
+<dt><code>#friend remove [name]</code></dt><dd>Removes a friend.</dd>
+<dt><code>#friend list</code></dt><dd>Shows your friends.</dd>
+<dt><code>#orgskin</code></dt><dd>On cracked servers, shows players&#x27; real skins (only on your screen).</dd>
+        </dl>
+      </section>
+
+      <section id="configs">
+        <h2>Configs</h2>
+        <p>A config is a saved setup: which mods are on, every mod's settings and your keybinds. Make one for PvP, one for base hunting, and switch with one click.</p>
+        <ul class="plain">
+          <li>Open the <b>Configs</b> tab (Menu style) or the <b>Configs</b> page (List style).</li>
+          <li><b>New config</b> saves how everything is set right now. Type a name and click OK.</li>
+          <li>Click a config to use it. The one in use is green. The red trash can deletes it.</li>
+          <li>Friends, markers, HUD layout and theme aren't part of a config. They stay the same.</li>
+          <li>Configs are files in <code>.minecraft/config/paprika/configs/</code>, so you can share them.</li>
+        </ul>
+      </section>
+
+      <section id="hud">
+        <h2>HUD editor</h2>
+        <p>Move every Paprika HUD piece (watermark, FPS, coordinates, potion and armor HUD, the PlayerW list and more) wherever you want.</p>
+        <ul class="plain">
+          <li>Open it with the <b>HUD</b> tab in the List style, the <b>HUD Editor</b> button in the pause menu or on the title screen.</li>
+          <li>Drag pieces with the left mouse button. Right click puts a piece back in its normal place.</li>
+          <li>Mods that are off show as a box with their name, so you can place them before turning them on.</li>
+          <li><kbd>Esc</kbd> saves and closes.</li>
+        </ul>
+      </section>
+
+      <section id="looks">
+        <h2>Themes and menu style</h2>
+        <p>Pick a color theme in the <b>Themes</b> tab (Menu style) or on the <b>GUI</b> page (List style):</p>
+        <ul class="themes"><li>Paprika</li><li>Ocean</li><li>Forest</li><li>Grape</li><li>Sunset</li><li>Sakura</li><li>Mono</li><li>Midnight</li><li>Lava</li><li>Ice</li><li>Toxic</li><li>Royal</li><li>Candy</li><li>Nether</li><li>End</li><li>Mint</li><li>Coffee</li><li>Neon</li></ul>
+        <p>Under the themes, <b>Style</b> switches between the tabbed <b>Menu</b> and the <b>List</b> with every tab side by side.</p>
+      </section>
+
+      <section id="friends">
+        <h2>Friends</h2>
+        <p>Add friends with <code>#friend add [name]</code> or on the <b>Friends</b> page of the List style. The kill auras, TriggerBot, AimAssist, CrystalAura, WebAura, BowAimbot, AutoLogout and PlayerW leave friends alone, ESP shows them in aqua and FriendW tells you when they're near.</p>
+      </section>
+
+      <section id="markers">
+        <h2>Markers and areas</h2>
+        <p><b>Markers</b>: press <kbd>M</kbd> to open the marker menu. Give a marker a name, a color and coordinates. It shows on your screen with its distance, even through walls, and Baritone can walk to it with <code>#b gotomarker [name]</code>.</p>
+        <p><b>Areas</b>: draw a box with <code>#a</code>. Baritone can mine everything inside with <code>#b minea</code> or fill it with <code>#b fillawith [block]</code>.</p>
+      </section>
+
+      <section id="accounts">
+        <h2>Accounts</h2>
+        <p>Play under another name on singleplayer and cracked (offline-mode) servers. Click <b>Cracked</b> in the top right of the Singleplayer or Multiplayer screen, make an account with <b>New account</b> and click it to use it (it turns green). <b>Exit cracked</b> takes you back to your Microsoft account. Online servers need your real account.</p>
+      </section>
+
+      <section id="trouble">
+        <h2>Troubleshooting</h2>
+        <h3>Minecraft says Paprika needs a different Minecraft version</h3>
+        <p>You have the jar for the other version. Use the 1.20 jar for Minecraft 1.20 and 1.20.1, and the 1.21.1 jar for 1.21 and 1.21.1.</p>
+        <h3>Minecraft says Fabric API is missing</h3>
+        <p>Download Fabric API for your Minecraft version and put it in the same <code>mods</code> folder.</p>
+        <h3>It crashes saying the Java version is wrong</h3>
+        <p>Paprika for 1.20 needs Java 17 and for 1.21.1 Java 21. The official launcher picks the right one for you; in other launchers, set the Java version in the profile settings.</p>
+        <h3>The menu doesn't open</h3>
+        <p>Another mod may use <kbd>Right Shift</kbd> or <kbd>Delete</kbd> too. Change Paprika's menu key in Controls.</p>
+        <h3>A mod does nothing on a server</h3>
+        <p>Many servers block movement and combat mods or move you back. Try it in singleplayer: if it works there, the server is stopping it.</p>
+        <h3>Something else is wrong</h3>
+        <p>Ask in the Discord and send the file <code>.minecraft/logs/latest.log</code>.</p>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <a class="discord" href="https://discord.gg/bVtSsdgZXB" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.39 2.8a13.9 13.9 0 0 0-.63 1.3 18.4 18.4 0 0 0-5.52 0 13 13 0 0 0-.64-1.3 19.7 19.7 0 0 0-4.93 1.53C.53 9.05-.32 13.6.1 18.1a19.9 19.9 0 0 0 6.04 3.05c.49-.66.92-1.36 1.29-2.1a12.9 12.9 0 0 1-2.03-.97c.17-.12.34-.25.5-.38a14.2 14.2 0 0 0 12.2 0c.16.13.33.26.5.38-.65.38-1.33.71-2.04.98.37.73.8 1.43 1.29 2.09a19.8 19.8 0 0 0 6.05-3.05c.5-5.2-.84-9.72-3.55-13.73zM8.02 15.33c-1.18 0-2.16-1.08-2.16-2.42 0-1.33.95-2.42 2.16-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.96 2.42-2.16 2.42zm7.97 0c-1.18 0-2.15-1.08-2.15-2.42 0-1.33.95-2.42 2.15-2.42 1.21 0 2.18 1.1 2.16 2.42 0 1.34-.95 2.42-2.16 2.42z"/></svg>
+      Join the Paprika Discord
+    </a>
+    <p>&copy; 2026 getpaprika. All rights reserved.</p>
+    <p>Paprika Client is a free fan-made mod. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.</p>
+  </footer>
+</div>
+<script>
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const parts = document.querySelectorAll("header.top .brand, header.top nav, .side, .doc h1, .doc > p.lead, .doc section > h2, .doc section > p, .doc h3, .modlist dt, .modlist dd, .cmd-list, .doc ul.plain, .themes, footer .discord, footer p");
+  parts.forEach(el => el.classList.add("fx"));
+  const io = new IntersectionObserver(entries => {
+    const seen = entries.filter(e => e.isIntersecting).map(e => e.target);
+    seen.forEach(el => io.unobserve(el));
+    seen.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING) ? -1 : 1);
+    const step = Math.min(60, 500 / Math.max(1, seen.length));
+    seen.forEach((el, i) => setTimeout(() => el.classList.add("in"), i * step));
+  }, { threshold: 0.05 });
+  parts.forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
