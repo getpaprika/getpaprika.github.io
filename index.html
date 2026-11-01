@@ -74,6 +74,8 @@ p.sec-sub{color:var(--ash);max-width:60ch;margin:0 0 26px}
 .hint{color:var(--ash);font-size:13px;margin:14px 2px 0}
 .note{color:#8d7b72;font-size:13px;font-style:italic;margin:6px 2px 0}
 .styles{display:inline-flex;background:#120c0a;border:1px solid var(--line);border-radius:10px;padding:3px;gap:3px}
+.shot{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line)}
+.shot[hidden]{display:none}
 .styles button{all:unset;cursor:pointer;padding:7px 14px;border-radius:7px;font:600 14px var(--text);color:var(--ash)}
 .styles button[aria-pressed="true"]{background:var(--paprika);color:#fff}
 .styles button:focus-visible{outline:2px solid var(--toast);outline-offset:2px}
@@ -178,28 +180,16 @@ html{scroll-padding-top:84px}
   </div>
 
   <section id="mods">
-    <h2 class="sec">Every mod, laid out like the in-game menu</h2>
-    <p class="sec-sub">Paprika has two menu styles: pick one below. Click a mod to read what it does, or type to search.</p>
+    <h2 class="sec">Preview of Paprika</h2>
+    <p class="sec-sub">Paprika has two menu styles. Pick one to see how it looks in game.</p>
     <div class="menu">
       <div class="styles" role="group" aria-label="Menu style" style="margin-bottom:14px">
         <button type="button" id="styleList" aria-pressed="true">List style</button>
         <button type="button" id="styleMenu" aria-pressed="false">Menu style</button>
       </div>
-      <div class="menu-top">
-        <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b19f95" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-          <input id="q" type="search" placeholder="Search mods, e.g. ESP, aura, base" aria-label="Search mods"></label>
-        <span class="count" id="count"></span>
-      </div>
-      <div class="detail" id="detail" aria-live="polite"><b>Pick a mod</b><span>Click any mod below to see what it does.</span></div>
-      <div class="cols" id="cols"></div>
-      <div class="pmenu" id="pmenu" hidden>
-        <div class="pmenu-head"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</div>
-        <div class="ptabs" id="ptabs" role="tablist" aria-label="Menu tabs"></div>
-        <div class="pgrid" id="pgrid"></div>
-        <div class="pfoot" id="pfoot">Click a mod to toggle | pencil = settings | box = keybind | ESC to close</div>
-      </div>
+      <img class="shot" id="shotList" src="images/list-style.webp" width="1917" height="1078" alt="Paprika's List style: every mod in columns by category">
+      <img class="shot" id="shotMenu" src="images/menu-style.webp" width="1917" height="1078" alt="Paprika's Menu style: a tabbed menu with a grid of mods" hidden>
       <p class="hint" id="hint">In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.</p>
-      <p class="note">Paprika may look different in game.</p>
     </div>
     <div class="cmds">
       <h3>Chat commands</h3>
@@ -270,99 +260,14 @@ html{scroll-padding-top:84px}
   </footer>
 </div>
 
-<script>const MODS = [{"name": "FPS", "desc": "Shows your FPS on screen", "cat": "Render"}, {"name": "Ping", "desc": "Shows your ping in ms", "cat": "Render"}, {"name": "CoordsHUD", "desc": "Shows your coordinates (and the matching Nether/Overworld ones)", "cat": "Render"}, {"name": "PotionHUD", "desc": "Shows your potion effects and how long they last", "cat": "Render"}, {"name": "AIID", "desc": "Am I in danger? Warns when a hostile/neutral mob is coming at you", "cat": "Utility"}, {"name": "Fullbright", "desc": "Makes everything fully bright", "cat": "Render"}, {"name": "Xray", "desc": "See ores, beds, chests and furnaces through walls", "cat": "Render"}, {"name": "NoFall", "desc": "Disables fall damage", "cat": "Player"}, {"name": "Velocity", "desc": "You take no knockback at all", "cat": "Player"}, {"name": "Fly", "desc": "Fly like in creative mode", "cat": "Movement"}, {"name": "Jesus", "desc": "Walk on water (sneak to go under)", "cat": "Movement"}, {"name": "Spider", "desc": "Climb walls like a spider", "cat": "Movement"}, {"name": "EntityCulling", "desc": "Hides entities you can't see to boost FPS", "cat": "Render"}, {"name": "ShulkerBoxTooltip", "desc": "Hover a shulker box to see its contents", "cat": "Utility"}, {"name": "Saturation", "desc": "Shows your saturation above the hotbar", "cat": "Utility"}, {"name": "ESPP", "desc": "Red boxes around players, visible through walls", "cat": "Render"}, {"name": "ESPE", "desc": "Green boxes around passive mobs", "cat": "Render"}, {"name": "ESPM", "desc": "Orange boxes around hostile and neutral mobs", "cat": "Render"}, {"name": "TracersP", "desc": "Lines to players (same color as ESPP)", "cat": "Render"}, {"name": "TracersE", "desc": "Lines to passive mobs (same color as ESPE)", "cat": "Render"}, {"name": "TracersM", "desc": "Lines to hostile and neutral mobs (same color as ESPM)", "cat": "Render"}, {"name": "AutoCrystal", "desc": "Hold right click with crystals to place + break them in a loop", "cat": "Combat"}, {"name": "AutoCrits", "desc": "Every sword/axe hit becomes a critical hit", "cat": "Combat"}, {"name": "NExp", "desc": "Removes explosion particles", "cat": "Render"}, {"name": "PlayerW", "desc": "Warns you when a player is within 200 blocks", "cat": "Utility"}, {"name": "SpecW", "desc": "Warns you when someone is in spectator mode", "cat": "Utility"}, {"name": "BaseW", "desc": "Finds possible bases (chests, spawners, shulkers, armor stands, item frames that aren't natural)", "cat": "Utility"}, {"name": "Baritone", "desc": "Pathfinding bot - type #b commands in chat", "cat": "Movement"}, {"name": "AutoTotem", "desc": "In a fight (player within 40 blocks), puts a totem in your off hand 0.2s after one pops", "cat": "Combat"}, {"name": "TNTCountdown", "desc": "Shows a timer above lit TNT until it explodes", "cat": "Utility"}, {"name": "AutoMLG", "desc": "Places water under you before you hit the ground, then picks it up", "cat": "Utility"}, {"name": "ToggleSprint", "desc": "Sprints automatically when you walk forward", "cat": "Movement"}, {"name": "BoatFly", "desc": "Fly your boat where you look by holding W", "cat": "Movement"}, {"name": "AntiCobweb", "desc": "Cobwebs don't slow you down", "cat": "Movement"}, {"name": "AntiEdgeFall", "desc": "Stops you walking off edges without crouching", "cat": "Movement"}, {"name": "PKillAura", "desc": "Automatically hits players in reach when your attack is recharged", "cat": "Combat"}, {"name": "EKillAura", "desc": "Automatically hits passive mobs (not villagers, pets or named mobs)", "cat": "Combat"}, {"name": "MKillAura", "desc": "Hits hostile mobs, and neutral mobs only after they hit you", "cat": "Combat"}, {"name": "Freecam", "desc": "Fly your camera around while your body stays still", "cat": "Utility"}, {"name": "Scaffold", "desc": "Places blocks under you as you walk so you can't fall", "cat": "Movement"}, {"name": "AutoAnchor", "desc": "Place an anchor and it charges, shields and explodes it for you", "cat": "Combat"}, {"name": "StrongholdW", "desc": "Finds strongholds in loaded chunks and shows them in red", "cat": "Utility"}, {"name": "FortressW", "desc": "Finds nether fortresses in loaded chunks and shows them in purple", "cat": "Utility"}, {"name": "BastionW", "desc": "Finds bastions in loaded chunks and shows them in gold", "cat": "Utility"}, {"name": "AncientCityW", "desc": "Finds ancient cities in loaded chunks and shows them in teal", "cat": "Utility"}, {"name": "VillageW", "desc": "Finds villages in loaded chunks and shows them in lime", "cat": "Utility"}, {"name": "HealthHUD", "desc": "Shows other players' health next to their name tag", "cat": "Render"}, {"name": "FastLadder", "desc": "Climb ladders and vines twice as fast", "cat": "Movement"}, {"name": "NoHurtCam", "desc": "Removes the camera shake when you get hurt", "cat": "Render"}, {"name": "NoFire", "desc": "Removes the fire on your screen when you burn", "cat": "Render"}, {"name": "NoPumpkin", "desc": "Removes the pumpkin overlay when you wear a carved pumpkin", "cat": "Render"}, {"name": "AutoReplenish", "desc": "Refills empty hotbar slots and replaces broken tools", "cat": "Player"}, {"name": "ArrayList", "desc": "Shows the mods that are on in the top right", "cat": "Render"}, {"name": "Nuker", "desc": "Digs out everything in a 5x5x5 area around you with the right tools", "cat": "Player"}, {"name": "Tunnel", "desc": "Digs a 3x3x3 area around you, never the blocks below you", "cat": "Player"}, {"name": "DangerousNetherrack", "desc": "Highlights hanging blocks with a deep hole under them in crimson (any block in the Nether, netherrack elsewhere)", "cat": "Render"}, {"name": "BlockESP", "desc": "Highlights the block you choose (pencil -> Block, e.g. diamond_ore) in rainbow through walls", "cat": "Render"}, {"name": "BlockTracers", "desc": "Rainbow lines to the block you choose (pencil -> Block, e.g. diamond_ore), through walls", "cat": "Render"}, {"name": "LavaESP", "desc": "Fills lava in see-through orange so you can see it through walls", "cat": "Render"}, {"name": "ItemESP", "desc": "Purple boxes around dropped items, through walls", "cat": "Render"}, {"name": "ItemTracers", "desc": "Purple lines to dropped items", "cat": "Render"}, {"name": "NewChunks", "desc": "New chunks in red (never generated before), old chunks in green (setting)", "cat": "Render"}, {"name": "FreeLook", "desc": "Hold Alt to look around your character in third person without turning it", "cat": "Render"}, {"name": "WebAura", "desc": "Places a cobweb in players near you, then switches back to what you were holding", "cat": "Combat"}, {"name": "FriendW", "desc": "Tells you when a friend is near (cyan, under PlayerW)", "cat": "Utility"}, {"name": "FastMine", "desc": "Mine blocks faster in survival (like Haste)", "cat": "Player"}, {"name": "AirJump", "desc": "Jump again while you're in the air", "cat": "Movement"}, {"name": "ClickTP", "desc": "Left click a block to teleport there", "cat": "Movement"}, {"name": "Noclip", "desc": "Walk through walls and ceilings (the floor still holds you)", "cat": "Movement"}, {"name": "FakeLag", "desc": "Makes you look laggy to other players", "cat": "Movement"}, {"name": "Blink", "desc": "Server thinks you stand still while you move, a clone shows where it thinks you are", "cat": "Movement"}, {"name": "Speedometer", "desc": "Shows your speed in blocks per second", "cat": "Render"}, {"name": "TriggerBotP", "desc": "Hits players when your crosshair is on them", "cat": "Combat"}, {"name": "TriggerBotE", "desc": "Hits passive mobs when your crosshair is on them", "cat": "Combat"}, {"name": "TriggerBotM", "desc": "Hits monsters and neutral mobs when your crosshair is on them", "cat": "Combat"}, {"name": "AimAssistP", "desc": "Pulls your aim toward players", "cat": "Combat"}, {"name": "AimAssistE", "desc": "Pulls your aim toward passive mobs", "cat": "Combat"}, {"name": "AimAssistM", "desc": "Pulls your aim toward monsters and neutral mobs", "cat": "Combat"}, {"name": "AutoGap", "desc": "Eats a golden apple (enchanted too) when your health is low", "cat": "Combat"}, {"name": "Hitboxes", "desc": "Makes other players' and mobs' hitboxes bigger", "cat": "Combat"}, {"name": "BlockOutline", "desc": "Colored outline + fill on the block you look at (pick the color yourself)", "cat": "Render"}, {"name": "AntiSpam", "desc": "Repeated chat messages show once with a counter (x2, x3...)", "cat": "Utility"}, {"name": "AutoLogout", "desc": "Logs you out when a player gets close", "cat": "Utility"}, {"name": "AutoArmor", "desc": "Automatically wears your best armor", "cat": "Combat"}, {"name": "AutoEat", "desc": "Eats automatically when you get too hungry to sprint", "cat": "Player"}, {"name": "BowAimbot", "desc": "Aims your bow at players and hostile mobs", "cat": "Combat"}, {"name": "CrystalAura", "desc": "Places and blows up crystals next to enemy players", "cat": "Combat"}, {"name": "Speed", "desc": "Walk faster", "cat": "Movement"}, {"name": "NoSlow", "desc": "No slowdown from using items, soul sand or honey", "cat": "Movement"}, {"name": "ElytraFly", "desc": "Double jump to glide like with an elytra, hold Ctrl to boost", "cat": "Movement"}, {"name": "Trajectories", "desc": "Shows where your projectile will fly and land", "cat": "Render"}, {"name": "NoWeather", "desc": "Removes rain, snow and thunder", "cat": "Render"}, {"name": "Zoom", "desc": "Lets you hold Z to zoom in", "cat": "Render"}, {"name": "Breadcrumbs", "desc": "Draws a line where you have walked (kept until you turn it off)", "cat": "Render"}, {"name": "PChams", "desc": "Players get a red glowing outline through walls (friends in aqua)", "cat": "Render"}, {"name": "EChams", "desc": "Passive mobs get a green glowing outline through walls", "cat": "Render"}, {"name": "MChams", "desc": "Hostile and neutral mobs get an orange glowing outline through walls", "cat": "Render"}, {"name": "FastBlocks", "desc": "Place and break blocks without the delay", "cat": "Player"}, {"name": "AutoFish", "desc": "Fishes automatically when you're near water", "cat": "Utility"}, {"name": "AntiAfk", "desc": "Keeps jumping so you don't get kicked for AFK", "cat": "Player"}, {"name": "ChestStealer", "desc": "Buttons to take all blocks or all items from a chest", "cat": "Player"}, {"name": "DeathW", "desc": "Marks where you died and tells you in chat", "cat": "Utility"}, {"name": "ArmorHUD", "desc": "Shows your armor next to the off-hand slot", "cat": "Render"}, {"name": "Reach", "desc": "Hit and reach blocks from further away (up to 7 blocks)", "cat": "Combat"}];
-const TABS = ["Combat","Player","Movement","Render","Utility"];
-const cols = document.getElementById("cols"), q = document.getElementById("q");
-const detail = document.getElementById("detail"), count = document.getElementById("count");
-const buttons = [];
-for (const tab of TABS) {
-  const col = document.createElement("div"); col.className = "col";
-  const h = document.createElement("h3"); h.textContent = tab; col.appendChild(h);
-  const ul = document.createElement("ul");
-  for (const m of MODS.filter(x => x.cat === tab)) {
-    const li = document.createElement("li");
-    const b = document.createElement("button"); b.className = "mod"; b.type = "button"; b.textContent = m.name; b.title = m.desc;
-    b.addEventListener("click", () => {
-      b.classList.toggle("on");
-      detail.innerHTML = "";
-      const n = document.createElement("b"); n.textContent = m.name;
-      const d = document.createElement("span"); d.textContent = m.desc + " (" + tab + " tab)";
-      detail.append(n, d);
-    });
-    li.appendChild(b); ul.appendChild(li); buttons.push([b, m]);
-  }
-  col.appendChild(ul); cols.appendChild(col);
-}
-function filter() {
-  const s = q.value.trim().toLowerCase();
-  let n = 0;
-  for (const [b, m] of buttons) {
-    const hit = !s || m.name.toLowerCase().includes(s) || m.desc.toLowerCase().includes(s);
-    b.classList.toggle("dim", !hit); if (hit) n++;
-  }
-  count.textContent = s ? (n ? n + " of " + MODS.length + " mods match" : "No mods match. Try another word.") : MODS.length + " mods";
-}
-q.addEventListener("input", () => { filter(); drawMenu(); });
-filter();
-const MENU_TABS = ["Combat","Movement","Render","Player","Utility","Config","Themes"];
-const CONFIG = [["Watermark","The red dye + Paprika Client in the top left"],["Real skins (orgSkin)","Load real skins on servers that don't show them"],["Baritone: avoid danger","Baritone kills hostile mobs that come close before continuing"],["Baritone: auto eat","Baritone eats when you're hungry during a task"]];
-const THEMES = [["Paprika","#FF2B2B"],["Ocean","#2BB5FF"],["Forest","#3CB043"],["Grape","#A64DFF"],["Sunset","#FF8C1A"],["Sakura","#FF6FAE"],["Mono","#DDDDDD"],["Midnight","#5B6CFF"],["Lava","#FF4500"],["Ice","#A0E9FF"],["Toxic","#7FFF00"],["Royal","#FFD700"],["Candy","#FF69B4"],["Nether","#B22222"],["End","#E0D68A"],["Mint","#3EB489"],["Coffee","#C69C6D"],["Neon","#00FFF0"]];
-const onSet = new Set();
-let tab = "Utility";
-const ptabs = document.getElementById("ptabs"), pgrid = document.getElementById("pgrid"), pfoot = document.getElementById("pfoot");
-for (const t of MENU_TABS) {
-  const b = document.createElement("button"); b.className = "ptab"; b.type = "button"; b.role = "tab"; b.textContent = t;
-  b.addEventListener("click", () => { tab = t; q.value = ""; filter(); drawMenu(); });
-  ptabs.appendChild(b);
-}
-function showDetail(name, text) {
-  detail.innerHTML = "";
-  const n = document.createElement("b"); n.textContent = name;
-  const d = document.createElement("span"); d.textContent = text;
-  detail.append(n, d);
-}
-function drawMenu() {
-  const s = q.value.trim().toLowerCase();
-  for (const b of ptabs.children) b.setAttribute("aria-selected", String(!s && b.textContent === tab));
-  pgrid.innerHTML = "";
-  let items;
-  if (s) items = MODS.filter(m => m.name.toLowerCase().includes(s) || m.desc.toLowerCase().includes(s)).map(m => ["mod", m]);
-  else if (tab === "Config") items = CONFIG.map(c => ["cfg", c]);
-  else if (tab === "Themes") items = THEMES.map(t => ["theme", t]);
-  else items = MODS.filter(m => m.cat === tab).map(m => ["mod", m]);
-  pfoot.textContent = s ? (items.length ? "Search results from every tab" : "No mods found")
-    : tab === "Themes" ? "Click a theme to use it" : tab === "Config" ? "Click to turn on / off"
-    : "Click a mod to toggle | pencil = settings | box = keybind | ESC to close";
-  for (const [kind, it] of items) {
-    const b = document.createElement("button"); b.type = "button"; b.className = "pbtn";
-    const nm = document.createElement("span"); nm.className = "nm";
-    if (kind === "theme") {
-      const sw = document.createElement("span"); sw.className = "sw"; sw.style.background = it[1];
-      nm.textContent = it[0]; nm.style.textAlign = "left"; b.append(sw, nm);
-      b.addEventListener("click", () => showDetail(it[0] + " theme", "Changes the menu colors to the " + it[0] + " theme."));
-    } else {
-      const key = kind === "mod" ? it.name : it[0];
-      nm.textContent = key; b.appendChild(nm);
-      if (kind === "mod") { const sq = document.createElement("span"); sq.className = "sq"; sq.title = "Settings (pencil)"; b.appendChild(sq); }
-      if (kind === "mod") { const k = document.createElement("span"); k.className = "key"; k.title = "Keybind"; b.appendChild(k); }
-      if (onSet.has(key)) b.classList.add("on");
-      b.addEventListener("click", () => {
-        onSet.has(key) ? onSet.delete(key) : onSet.add(key);
-        b.classList.toggle("on");
-        showDetail(key, kind === "mod" ? it.desc + " (" + it.cat + " tab)" : it[1]);
-      });
-    }
-    pgrid.appendChild(b);
-  }
-}
-drawMenu();
+<script>
 const styleList = document.getElementById("styleList"), styleMenu = document.getElementById("styleMenu");
-const hint = document.getElementById("hint");
+const shotList = document.getElementById("shotList"), shotMenu = document.getElementById("shotMenu"), hint = document.getElementById("hint");
 function setStyle(menu) {
   styleList.setAttribute("aria-pressed", String(!menu));
   styleMenu.setAttribute("aria-pressed", String(menu));
-  cols.hidden = menu;
-  document.getElementById("pmenu").hidden = !menu;
+  shotList.hidden = menu;
+  shotMenu.hidden = !menu;
   hint.textContent = menu
     ? "In the game: Right Shift or Delete opens the menu. Click a mod to turn it on, the pencil opens its settings, the box sets a keybind."
     : "In the game: Right Shift or Delete opens the menu. Left click turns a mod on, right click opens its settings.";
@@ -372,7 +277,7 @@ styleList.addEventListener("click", () => setStyle(false));
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
   const parts = document.querySelectorAll(
     "header.top .brand, header.top nav, .hero h1, .hero .lead, .get, " +
-    "section h2.sec, section p.sec-sub, .menu .styles, .menu-top, .detail, .col, .pmenu, .hint, .note, .cmds h3, .cmds > p, .cmd-list, " +
+    "section h2.sec, section p.sec-sub, .menu .styles, .shot, .hint, .note, .cmds h3, .cmds > p, .cmd-list, " +
     ".feat, ol.how li, .acct-note, ol.steps li, details, footer .discord, footer p");
   parts.forEach(el => el.classList.add("fx"));
   const io = new IntersectionObserver(entries => {
