@@ -153,14 +153,14 @@ footer p{margin:4px 0}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}.fx{opacity:1;transform:none;transition:none}}
 
 .docs{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;padding:20px 0 40px}
-.side{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow:auto;padding-right:6px}
+.side{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 104px);overflow:auto;padding-right:6px}
 .side a{display:block;color:var(--ash);text-decoration:none;padding:5px 10px;border-radius:8px;font-size:15px}
 .side a:hover{color:var(--bone);background:var(--ember)}
 .side a.sub{padding-left:22px;font-size:14px}
 .side a.back{color:var(--paprika);font-weight:600;margin-bottom:10px}
 .doc h1{font:800 clamp(40px,6vw,64px)/.95 var(--display);letter-spacing:-.035em;margin:0 0 10px}
 .doc>p.lead{color:var(--ash);font-size:18px;max-width:60ch;margin:0 0 20px}
-.doc [id]{scroll-margin-top:20px}
+.doc [id]{scroll-margin-top:84px}
 .doc section{padding:34px 0 10px;border-top:1px solid var(--line)}
 .doc h2{font:800 clamp(28px,3.6vw,38px)/1.05 var(--display);letter-spacing:-.025em;margin:0 0 12px}
 .doc h3{font:800 22px/1.2 var(--display);margin:26px 0 8px;color:var(--paprika)}
@@ -194,13 +194,16 @@ ul.settings span{color:var(--ash)}
 }
 @media (max-width:620px){.cmd-list{grid-template-columns:1fr}.cmd-list dt{border-bottom:0;padding-bottom:2px}.cmd-list dd{padding-top:2px}}
 @media (max-width:560px){header.top{flex-wrap:wrap;gap:12px;padding:18px 0}header.top nav{width:100%;display:flex;flex-wrap:wrap;gap:6px 18px}header.top nav a{margin-left:0}}
+header.top{position:sticky;top:0;z-index:50;background:rgba(28,19,16,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 0 0 100vmax rgba(28,19,16,.92);clip-path:inset(0 -100vmax);border-bottom:1px solid var(--line);padding:14px 0}
+html{scroll-padding-top:84px}
+@media (max-width:560px){header.top{padding:12px 0}html{scroll-padding-top:100px}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <a class="brand" href="index.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABQUlEQVR4nN2RsU7CUBSGv1uJVXYlmlZjMAImjk5upOLMyIgP4GhSF+Mij2F8AlcxJD6Ak4NFRAbTgkUmB7FC4nFqpcU4G//tnpzv3POfH/63TgrbYhs5+a1HJYHJd3k5TcMVBsM+Na+lbCMnNa8VY1KT8IG1het0aHShupsFoESbKzeDbSCV/CJAbEhqcprbbOP48xSND87qj1im4v4ljah3Dss7AFREQ/Epp15bAWghfNy8URfdgN44YLWwhmUq7vo63uiN/dI65/UHAMzNLPKNTVsAcJ0OAM+jgOreBgBFcwaAy2svdkSNhELY8fVYreEKrtNBJTJJJeEQ7I2D6C7hP46vR/VQsUhsIycL6QwA1oqAaDRcwTJVBIeR/mih5rXUYNhnaXYORIu2cXyd29enKXhqg1BHZl5E4maT4N/RF76+lm1w0LGHAAAAAElFTkSuQmCC" alt="">Paprika Client</a>
-    <nav><a href="install.html">Install</a><a href="index.html#mods">Mods</a><a href="docs.html" aria-current="page" style="color:var(--bone)">Docs</a></nav>
+    <nav><a href="index.html#mods">Mods</a><a href="index.html#accounts">Accounts</a><a href="install.html">Install</a><a href="index.html#faq">FAQ</a><a href="docs.html" aria-current="page" style="color:var(--bone)">Docs</a></nav>
   </header>
 
   <div class="docs">
@@ -424,7 +427,7 @@ ul.settings span{color:var(--ash)}
         <ul class="plain">
           <li>Open it with the <b>HUD</b> tab in the List style, the <b>HUD Editor</b> button in the pause menu or on the title screen.</li>
           <li>Drag pieces with the left mouse button. Right click puts a piece back in its normal place.</li>
-          <li>Mods that are off show as a box with their name, so you can place them before turning them on.</li>
+          <li>Every piece looks the way it does in game, also mods that are off, so you can place them before turning them on. Pieces with nothing to show yet (no players near, no potion effects) show an example.</li>
           <li><kbd>Esc</kbd> saves and closes.</li>
         </ul>
       </section>

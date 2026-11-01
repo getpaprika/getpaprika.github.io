@@ -152,6 +152,9 @@ footer p{margin:4px 0}
 .fx.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.dl{transition:none}.fx{opacity:1;transform:none;transition:none}}
 @media (max-width:560px){header.top{flex-wrap:wrap;gap:12px;padding:18px 0}header.top nav{width:100%;display:flex;flex-wrap:wrap;gap:6px 18px}header.top nav a{margin-left:0}}
+header.top{position:sticky;top:0;z-index:50;background:rgba(28,19,16,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 0 0 100vmax rgba(28,19,16,.92);clip-path:inset(0 -100vmax);border-bottom:1px solid var(--line);padding:14px 0}
+html{scroll-padding-top:84px}
+@media (max-width:560px){header.top{padding:12px 0}html{scroll-padding-top:100px}}
 </style>
 </head>
 <body>
