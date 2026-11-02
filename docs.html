@@ -257,7 +257,7 @@ html{scroll-padding-top:84px}
 
       <section id="mods">
         <h2>Mods</h2>
-        <p>All 104 mods by tab, with what every setting does. Mods marked "may not work on servers" do things most servers check for: they work in singleplayer but servers can undo them.</p>
+        <p>All 106 mods by tab, with what every setting does. Mods marked "may not work on servers" do things most servers check for: they work in singleplayer but servers can undo them.</p>
         <h3 id="tab-combat">Combat</h3>
 <dl class="modlist">
 <dt id="mod-autocrystal">AutoCrystal</dt><dd><p>Hold right click with crystals to place + break them in a loop.</p><ul class="settings"><li><b>Speed</b> <span>Places + breaks per second. 5/s by default, from 1 to 20/s.</span></li><li><b>Random timing</b> <span>Makes the rhythm uneven so it looks more natural. on by default.</span></li></ul></dd>
@@ -342,6 +342,7 @@ html{scroll-padding-top:84px}
 <dt id="mod-lavaesp">LavaESP</dt><dd><p>Fills lava in see-through orange so you can see it through walls.</p><ul class="settings"><li><b>Range</b> <span>How far around you lava is shown. 32 blocks by default, from 8 to 64 blocks.</span></li></ul></dd>
 <dt id="mod-itemesp">ItemESP</dt><dd><p>Purple boxes around dropped items, through walls.</p></dd>
 <dt id="mod-itemtracers">ItemTracers</dt><dd><p>Purple lines to dropped items.</p></dd>
+<dt id="mod-storageesp">StorageESP</dt><dd><p>Boxes and tracers to every block that holds items, through walls.</p><p class="more">Chests, trapped chests and barrels are gold, ender chests purple, shulker boxes pink, and everything else with an inventory (hoppers, furnaces, dispensers, droppers, brewing stands...) gray. The closest 1000 are shown.</p><ul class="settings"><li><b>Tracers</b> <span>Also draw a line to every storage block. on by default.</span></li></ul></dd>
 <dt id="mod-newchunks">NewChunks</dt><dd><p>New chunks in red (never generated before), old chunks in green (setting).</p><p class="more">Works best near water and lava: it spots new chunks by how liquids flow when the chunk arrives.</p><ul class="settings"><li><b>Show old</b> <span>Also show chunks that already existed before (green). off by default.</span></li></ul></dd>
 <dt id="mod-freelook">FreeLook</dt><dd><p>Hold Alt to look around your character in third person without turning it.</p><p class="more">Hold Alt. Your keys keep working while you look around.</p></dd>
 <dt id="mod-speedometer">Speedometer</dt><dd><p>Shows your speed in blocks per second.</p></dd>
@@ -365,13 +366,14 @@ html{scroll-padding-top:84px}
 <dt id="mod-basew">BaseW</dt><dd><p>Finds possible bases (chests, spawners, shulkers, armor stands, item frames that aren&#x27;t natural).</p><p class="more">Yellow = possible base, crimson = guaranteed base (WARNING title + sound), white = natural structure. Natural structures (villages, dungeons, igloos, witch huts, trial chambers...) are recognised and ignored. One crafting table or furnace on its own is not a base: a guaranteed base needs two different kinds of home blocks (like a crafting table and a furnace, or a bed and a door), or one kind plus other strong signs.</p><ul class="settings"><li><b>Group distance</b> <span>Finds closer together than this are one base. 64 blocks by default, from 8 to 128 blocks.</span></li><li><b>Show natural</b> <span>Also show natural structures (dungeons, mineshafts...), labelled Natural. off by default.</span></li><li><b>Include spawners</b> <span>ON: every spawner is a guaranteed base, and spawners no longer cancel the chests next to them. off by default.</span></li></ul></dd>
 <dt id="mod-tntcountdown">TNTCountdown</dt><dd><p>Shows a timer above lit TNT until it explodes.</p><ul class="settings"><li><b>Range</b> <span>TNT further away than this has no timer. 64 blocks by default, from 16 to 128 blocks.</span></li></ul></dd>
 <dt id="mod-automlg">AutoMLG</dt><dd><p>Places water under you before you hit the ground, then picks it up.</p></dd>
-<dt id="mod-freecam">Freecam</dt><dd><p>Fly your camera around while your body stays still.</p></dd>
+<dt id="mod-freecam">Freecam</dt><dd><p>Fly your camera around while your body stays still.</p><ul class="settings"><li><b>Show hand</b> <span>Show the item you&#x27;re holding in front of the free camera, even while your body stands still. on by default.</span></li></ul></dd>
 <dt id="mod-strongholdw">StrongholdW</dt><dd><p>Finds strongholds in loaded chunks and shows them in red.</p></dd>
 <dt id="mod-fortressw">FortressW</dt><dd><p>Finds nether fortresses in loaded chunks and shows them in purple.</p></dd>
 <dt id="mod-bastionw">BastionW</dt><dd><p>Finds bastions in loaded chunks and shows them in gold.</p></dd>
 <dt id="mod-ancientcityw">AncientCityW</dt><dd><p>Finds ancient cities in loaded chunks and shows them in teal.</p></dd>
 <dt id="mod-villagew">VillageW</dt><dd><p>Finds villages in loaded chunks and shows them in lime.</p></dd>
 <dt id="mod-friendw">FriendW</dt><dd><p>Tells you when a friend is near (cyan, under PlayerW).</p><ul class="settings"><li><b>Range</b> <span>How close a friend has to be. 200 blocks by default, from 16 to 512 blocks.</span></li></ul></dd>
+<dt id="mod-streamermode">StreamerMode</dt><dd><p>Covers your username anywhere it&#x27;s shown with 8 random letters that change every 0.5 seconds.</p><p class="more">Works on all text: chat, the tab list, name tags, the scoreboard and menus. The letters are a random mix of upper and lower case, and keep the color your name had.</p></dd>
 <dt id="mod-antispam">AntiSpam</dt><dd><p>Repeated chat messages show once with a counter (x2, x3..).</p></dd>
 <dt id="mod-autologout">AutoLogout</dt><dd><p>Logs you out when a player gets close.</p><ul class="settings"><li><b>Distance</b> <span>How close a player can get before you&#x27;re logged out. 6 blocks by default, from 1 to 128 blocks.</span></li><li><b>Turn off after</b> <span>Turn AutoLogout off after it logs you out (so you can rejoin). on by default.</span></li></ul></dd>
 <dt id="mod-autofish">AutoFish</dt><dd><p>Fishes automatically when you&#x27;re near water.</p><ul class="settings"><li><b>Water range</b> <span>How far it looks for water. 8 blocks by default, from 3 to 16 blocks.</span></li></ul></dd>
